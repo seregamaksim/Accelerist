@@ -1,12 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const initialState: any = {
+const initialState = {
   data: [],
 };
-export const fetchData = createAsyncThunk('auth/getData', async () => {
-  const response = await fetch('https://jsonplaceholder.typicode.com/todos/');
-  return response.json();
-});
+
 const authSlice = createSlice({
   initialState,
   name: 'auth',
@@ -16,9 +13,9 @@ const authSlice = createSlice({
     signOut(state) {},
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchData.fulfilled, (state, action) => {
-      console.log('action', action);
-    });
+    // builder.addCase(fetchData.fulfilled, (state, action) => {
+    //   console.log('action', action);
+    // });
   },
 });
 
