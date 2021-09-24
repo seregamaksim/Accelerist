@@ -4,18 +4,58 @@
   --blue: #2baee0;
   --secondaryBlue: #caf0ff;
   --lightBlue: #ceedf9;
+  --gray: #bfbfbf;
   --darkGray: #737373;
+  --lightGray: #e8e8e8;
+  --disabledGray: #f9f9f9;
+}
+@font-face {
+  font-family: 'Rubik';
+  src: url('./static/fonts/Rubik/Rubik-Regular.woff2'),
+    url('./static/fonts/Rubik/Rubik-Regular.woff');
+  font-display: swap;
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Rubik';
+  src: url('./static/fonts/Rubik/Rubik-Medium.woff2'),
+    url('./static/fonts/Rubik/Rubik-Medium.woff');
+  font-display: swap;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.visually-hidden {
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  margin: -1px;
 }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Rubik', Arial, Helvetica, sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+img {
+  display: block;
+  max-width: 100%;
+}
+a {
+  text-decoration: none;
+}
+button {
+  border: 0;
+  background: none;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
