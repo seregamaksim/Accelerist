@@ -1,6 +1,7 @@
 import { AnyAction, Dispatch } from 'redux';
 import { REHYDRATE } from 'redux-persist';
 import { http } from '../../services/http';
+import { signUpPost } from '../auth/thunks';
 
 import { actions } from '../ducks';
 
@@ -10,8 +11,10 @@ export const authMiddleware =
   (action: AnyAction): AnyAction => {
     if (
       action.type === actions.auth.signInSuccess.type ||
-      action.type === actions.auth.signUpSuccess.type
+      action.type === signUpPost.fulfilled.type
     ) {
+      console.log('have token', action.payload?.accessToken);
+
       action.payload?.token &&
         http.setAuthorizationHeader(action.payload.token);
     }

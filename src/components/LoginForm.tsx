@@ -73,7 +73,7 @@ export default function LoginForm() {
               <ForgotLink to="/reset">Forgot Password?</ForgotLink>
             </RememberForgotWrap>
             <ThemeProvider theme={theme.primary}>
-              <StyledButton text="Login" />
+              <StyledButton text="Login" type="submit" />
             </ThemeProvider>
           </Form>
         )}

@@ -1,9 +1,8 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { reducer } from './ducks';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { reducer } from './ducks';
 import { authMiddleware } from './middlewares/authMiddleware';
-
 const persistConfig = {
   key: 'root',
   storage,
@@ -18,7 +17,7 @@ export const store = configureStore({
       serializableCheck: false,
     }).concat(authMiddleware),
 });
-export let persistor = persistStore(store);
+export const persistor = persistStore(store);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

@@ -1,12 +1,24 @@
+import { ButtonHTMLAttributes } from 'hoist-non-react-statics/node_modules/@types/react';
 import styled from 'styled-components';
 
 interface Props {
   text: string;
+  type: 'button' | 'submit' | 'reset' | undefined;
   className?: string;
+  disabled?: boolean;
 }
 
-export default function Button({ text, className }: Props) {
-  return <StyledButton className={className}>{text}</StyledButton>;
+export default function Button({
+  text,
+  className,
+  type = 'button',
+  disabled = false,
+}: Props) {
+  return (
+    <StyledButton className={className} type={type} disabled={disabled}>
+      {text}
+    </StyledButton>
+  );
 }
 
 const StyledButton = styled.button`

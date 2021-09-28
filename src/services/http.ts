@@ -17,14 +17,16 @@ export class Http {
   }
 
   private useInterceptors(): void {
+    // console.log('awd');
+
     this._axios.interceptors.response.use(
       undefined,
       (error: AxiosError): Promise<AxiosError> => {
         if (error.response?.status === 401) {
-          store.dispatch(actions.auth.signOut());
+          // store.dispatch(actions.auth.signOut());
         }
         return Promise.reject(error.response?.data);
-      },
+      }
     );
   }
 
@@ -60,5 +62,5 @@ export const http = new Http(
   axios.create({
     baseURL: API_URL,
     timeout: 60000,
-  }),
+  })
 );

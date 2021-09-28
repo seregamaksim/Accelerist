@@ -1,30 +1,34 @@
+import { useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import { Formik, Field, Form, FormikHelpers } from 'formik';
+import { Formik, Form } from 'formik';
 import LabelInput from '../ui/LabelInput';
 import FormInput from '../ui/FormInput';
 import Button from '../ui/Button';
 import { theme } from '../theme';
-import { Link } from 'react-router-dom';
-import Checkbox from '../ui/Checkbox';
-import { useAppDispatch } from '../store/hooks';
-import { actions } from '../store/ducks';
-import { signUpPost } from '../store/auth/slice';
-import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { signUpPost } from '../store/auth/thunks';
+import * as Yup from 'yup';
+import { selectors } from '../store/ducks';
 
 interface IFormValues {
   email: string;
   password: string;
 }
-
+// const SignupSchema = Yup.object().shape({
+//   email: Yup.string().email('Invalid email'),
+// });
 export default function RegisterForm() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
   const initialValues: IFormValues = {
     email: '',
     password: '',
   };
 
   function submitVal(values: IFormValues) {
-    // dispatch(signUpPost(values));
+    console.log('aw');
+    dispatch(signUpPost(values));
   }
   return (
     <>
@@ -39,35 +43,38 @@ export default function RegisterForm() {
         </ToggleLink>
       </TogglerForm>
       <StyledFormik initialValues={initialValues} onSubmit={submitVal}>
-        <Form>
-          <InputsContainer>
-            <InputWrap>
-              <StyledLabelInput text="Email" htmlFor="email" />
-              <FormInput
-                id="email"
-                name="email"
-                placeholder="Enter email"
-                type="email"
-              />
-            </InputWrap>
-            <InputWrap>
-              <StyledLabelInput text="Password" htmlFor="password" />
-              <FormInput
-                id="password"
-                name="password"
-                placeholder="Password"
-                type="password"
-              />
-            </InputWrap>
-          </InputsContainer>
-          <TextPrivacyPolicy>
-            I agree that by clicking <b>“Registration”</b> I accept the{' '}
-            <b>Terms Of Service</b> and <b>Privacy Policy</b>
-          </TextPrivacyPolicy>
-          <ThemeProvider theme={theme.primary}>
-            <StyledButton text="Registration" />
-          </ThemeProvider>
-        </Form>
+        {({ errors, touched, isSubmitting }) => (
+          <Form>
+            <InputsContainer>
+              <InputWrap>
+                <StyledLabelInput text="Email" htmlFor="email" />
+                <FormInput
+                  id="email"
+                  name="email"
+                  placeholder="Enter email"
+                  type="email"
+                />
+              </InputWrap>
+              <InputWrap>
+                <StyledLabelInput text="Password" htmlFor="password" />
+                <FormInput
+                  id="password"
+                  name="password"
+                  placeholder="Password"
+                  type="password"
+                />
+              </InputWrap>
+            </InputsContainer>
+            <TextPrivacyPolicy>
+              I agree that by clicking <b>“Registration”</b> I accept the{' '}
+              <b>Terms Of Service</b> and <b>Privacy Policy</b>
+            </TextPrivacyPolicy>
+
+            <ThemeProvider theme={theme.primary}>
+              <StyledButton text="Registration" />
+            </ThemeProvider>
+          </Form>
+        )}
       </StyledFormik>
     </>
   );
@@ -121,7 +128,9 @@ const InputWrap = styled.div`
   }
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(Button).attrs(() => ({
+  type: 'submit',
+}))`
   width: 100%;
   font-weight: 500;
 `;
