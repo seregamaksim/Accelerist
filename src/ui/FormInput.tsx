@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styled from 'styled-components';
+import styled, { DefaultTheme } from 'styled-components';
 import { Field } from 'formik';
 import hideEye from '../static/images/password-eye-hide.svg';
 import showEye from '../static/images/password-eye-show.svg';
@@ -9,9 +9,16 @@ interface IFormInput {
   id: string;
   name: string;
   type: string;
+  className?: string;
 }
 
-export default function FormInput({ placeholder, id, name, type }: IFormInput) {
+export default function FormInput({
+  placeholder,
+  id,
+  name,
+  type,
+  className,
+}: IFormInput) {
   const [currentType, setCurrentType] = useState(type);
   const [isHidePassword, setIsHidePassword] = useState(true);
 
@@ -32,6 +39,7 @@ export default function FormInput({ placeholder, id, name, type }: IFormInput) {
         id={id}
         name={name}
         type={currentType}
+        className={className}
       />
       {type === 'password' && (
         <BtnShowPassword
@@ -71,6 +79,10 @@ const StyledField = styled(Field)`
     background-color: var(--disabledGray);
     color: var(--gray);
     border-color: var(--disabledGray);
+  }
+  &.error {
+    border-color: var(--red);
+    background-color: #fff2f2;
   }
 `;
 const BtnShowPassword = styled.button<{ isHide: boolean }>`

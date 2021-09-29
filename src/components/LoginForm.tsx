@@ -6,13 +6,17 @@ import Button from '../ui/Button';
 import { theme } from '../theme';
 import { Link } from 'react-router-dom';
 import Checkbox from '../ui/Checkbox';
+import * as Yup from 'yup';
 
 interface IFormValues {
   email: string;
   password: string;
   rememberPassword: boolean;
 }
-
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email('Incorrect email format').required('Required'),
+  password: Yup.string().required('Required'),
+});
 export default function LoginForm() {
   const initialValues: IFormValues = {
     email: '',
@@ -34,6 +38,7 @@ export default function LoginForm() {
       </TogglerForm>
       <StyledFormik
         initialValues={initialValues}
+        validationSchema={LoginSchema}
         onSubmit={(values, { setSubmitting }: FormikHelpers<IFormValues>) => {
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2));
@@ -41,7 +46,7 @@ export default function LoginForm() {
           }, 500);
         }}
       >
-        {({ values }) => (
+        {({ errors, touched, values, isValid }) => (
           <Form>
             <InputsContainer>
               <InputWrap>
@@ -51,7 +56,11 @@ export default function LoginForm() {
                   name="email"
                   placeholder="Enter email"
                   type="email"
+                  className={errors.email && touched.email ? 'error' : ''}
                 />
+                {errors.email && touched.email ? (
+                  <InputErrorText>{errors.email}</InputErrorText>
+                ) : null}
               </InputWrap>
               <InputWrap>
                 <StyledLabelInput text="Password" htmlFor="password" />
@@ -60,7 +69,11 @@ export default function LoginForm() {
                   name="password"
                   placeholder="Password"
                   type="password"
+                  className={errors.password && touched.password ? 'error' : ''}
                 />
+                {errors.password && touched.password ? (
+                  <InputErrorText>{errors.password}</InputErrorText>
+                ) : null}
               </InputWrap>
             </InputsContainer>
             <RememberForgotWrap>
@@ -73,7 +86,7 @@ export default function LoginForm() {
               <ForgotLink to="/reset">Forgot Password?</ForgotLink>
             </RememberForgotWrap>
             <ThemeProvider theme={theme.primary}>
-              <StyledButton text="Login" type="submit" />
+              <StyledButton text="Login" type="submit" disabled={!isValid} />
             </ThemeProvider>
           </Form>
         )}
@@ -128,6 +141,12 @@ const InputWrap = styled.div`
   &:last-child {
     margin-bottom: 0;
   }
+`;
+const InputErrorText = styled.p`
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--red);
+  margin-top: 8px;
 `;
 
 const StyledButton = styled(Button)`

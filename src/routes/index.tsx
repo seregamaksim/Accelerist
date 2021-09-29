@@ -11,14 +11,14 @@ import UserRoutes from './UserRoutes';
 
 export default function Routes() {
   let history = useHistory();
-  const isToken = useAppSelector(selectors.auth.getToken);
+  const isAuthohorized = useAppSelector(selectors.auth.isAuthohorized);
   useEffect(() => {
-    if (isToken.length > 0) {
-      console.log('token');
+    if (isAuthohorized) {
+      console.log('isAuthohorized');
 
       history.push('/');
     }
-  }, [isToken]);
+  }, [isAuthohorized]);
   return (
     <Switch>
       {/* <UserRoutes /> */}
@@ -31,7 +31,6 @@ export default function Routes() {
       <Route path="/login">
         <Login />
       </Route>
-      {isToken.length > 0 && <Redirect to="/" />}
       {/* <AuthRoutes /> */}
     </Switch>
   );

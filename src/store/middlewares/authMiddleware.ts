@@ -25,6 +25,8 @@ export const authMiddleware =
     }
 
     if (action.type === actions.auth.signOut.type) {
+      console.log('aw');
+
       http.unsetAuthorizationHeader();
     }
 

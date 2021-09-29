@@ -5,6 +5,7 @@ import { signUpPost } from './thunks';
 
 const initialState = {
   token: '',
+  isAuthorized: false,
   user: {},
 };
 
@@ -24,6 +25,7 @@ const authSlice = createSlice({
     },
     signOut(state) {
       state.token = '';
+      state.isAuthorized = false;
       state.user = {};
     },
   },
@@ -31,6 +33,7 @@ const authSlice = createSlice({
     builder.addCase(signUpPost.fulfilled, (state, { payload }) => {
       state.token = payload.accessToken;
       state.user = payload.user;
+      state.isAuthorized = true;
       console.log('state', state);
 
       // console.log('action', action);

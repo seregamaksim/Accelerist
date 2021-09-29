@@ -9,15 +9,17 @@ import { Link, useHistory } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { signUpPost } from '../store/auth/thunks';
 import * as Yup from 'yup';
-import { selectors } from '../store/ducks';
 
 interface IFormValues {
   email: string;
   password: string;
 }
-// const SignupSchema = Yup.object().shape({
-//   email: Yup.string().email('Invalid email'),
-// });
+const SignupSchema = Yup.object().shape({
+  email: Yup.string().email('Incorrect email format').required('Required'),
+  password: Yup.string()
+    .min(6, 'Minimum password length is 6 symbols')
+    .required('Required'),
+});
 export default function RegisterForm() {
   const dispatch = useAppDispatch();
 
@@ -27,7 +29,6 @@ export default function RegisterForm() {
   };
 
   function submitVal(values: IFormValues) {
-    console.log('aw');
     dispatch(signUpPost(values));
   }
   return (
@@ -42,8 +43,12 @@ export default function RegisterForm() {
           Login
         </ToggleLink>
       </TogglerForm>
-      <StyledFormik initialValues={initialValues} onSubmit={submitVal}>
-        {({ errors, touched, isSubmitting }) => (
+      <StyledFormik
+        initialValues={initialValues}
+        validationSchema={SignupSchema}
+        onSubmit={submitVal}
+      >
+        {({ errors, touched, isValid }) => (
           <Form>
             <InputsContainer>
               <InputWrap>
@@ -53,7 +58,11 @@ export default function RegisterForm() {
                   name="email"
                   placeholder="Enter email"
                   type="email"
+                  className={errors.email && touched.email ? 'error' : ''}
                 />
+                {errors.email && touched.email ? (
+                  <InputErrorText>{errors.email}</InputErrorText>
+                ) : null}
               </InputWrap>
               <InputWrap>
                 <StyledLabelInput text="Password" htmlFor="password" />
@@ -62,7 +71,11 @@ export default function RegisterForm() {
                   name="password"
                   placeholder="Password"
                   type="password"
+                  className={errors.password && touched.password ? 'error' : ''}
                 />
+                {errors.password && touched.password ? (
+                  <InputErrorText>{errors.password}</InputErrorText>
+                ) : null}
               </InputWrap>
             </InputsContainer>
             <TextPrivacyPolicy>
@@ -71,7 +84,11 @@ export default function RegisterForm() {
             </TextPrivacyPolicy>
 
             <ThemeProvider theme={theme.primary}>
-              <StyledButton text="Registration" />
+              <StyledButton
+                text="Registration"
+                type="submit"
+                disabled={!isValid}
+              />
             </ThemeProvider>
           </Form>
         )}
@@ -127,7 +144,12 @@ const InputWrap = styled.div`
     margin-bottom: 0;
   }
 `;
-
+const InputErrorText = styled.p`
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--red);
+  margin-top: 8px;
+`;
 const StyledButton = styled(Button).attrs(() => ({
   type: 'submit',
 }))`
