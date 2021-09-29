@@ -1,4 +1,3 @@
-import { ButtonHTMLAttributes } from 'hoist-non-react-statics/node_modules/@types/react';
 import styled from 'styled-components';
 
 interface Props {
@@ -6,6 +5,7 @@ interface Props {
   type: 'button' | 'submit' | 'reset' | undefined;
   className?: string;
   disabled?: boolean;
+  onClick?: () => void;
 }
 
 export default function Button({
@@ -13,9 +13,15 @@ export default function Button({
   className,
   type = 'button',
   disabled = false,
+  onClick,
 }: Props) {
   return (
-    <StyledButton className={className} type={type} disabled={disabled}>
+    <StyledButton
+      className={className}
+      type={type}
+      disabled={disabled}
+      onClick={onClick}
+    >
       {text}
     </StyledButton>
   );

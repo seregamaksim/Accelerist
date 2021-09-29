@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { Formik, Form } from 'formik';
 import LabelInput from '../ui/LabelInput';
@@ -6,11 +5,11 @@ import FormInput from '../ui/FormInput';
 import Button from '../ui/Button';
 import { theme } from '../theme';
 import { Link, useHistory } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { useAppDispatch } from '../store/hooks';
 import { signUpPost } from '../store/auth/thunks';
 import * as Yup from 'yup';
 
-interface IFormValues {
+export interface IRegistrationFormValues {
   email: string;
   password: string;
 }
@@ -22,14 +21,19 @@ const SignupSchema = Yup.object().shape({
 });
 export default function RegisterForm() {
   const dispatch = useAppDispatch();
+  const history = useHistory();
 
-  const initialValues: IFormValues = {
+  const initialValues: IRegistrationFormValues = {
     email: '',
     password: '',
   };
 
-  function submitVal(values: IFormValues) {
-    dispatch(signUpPost(values));
+  function submitVal(values: IRegistrationFormValues) {
+    dispatch(signUpPost(values)).then((data) => {
+      if (data.type.includes('fulfilled')) {
+        history.push('/dashboard');
+      }
+    });
   }
   return (
     <>
@@ -80,7 +84,13 @@ export default function RegisterForm() {
             </InputsContainer>
             <TextPrivacyPolicy>
               I agree that by clicking <b>“Registration”</b> I accept the{' '}
-              <b>Terms Of Service</b> and <b>Privacy Policy</b>
+              <Link to="#">
+                <b>Terms Of Service</b>
+              </Link>{' '}
+              and{' '}
+              <Link to="#">
+                <b>Privacy Policy</b>
+              </Link>
             </TextPrivacyPolicy>
 
             <ThemeProvider theme={theme.primary}>
@@ -104,6 +114,9 @@ const Title = styled.h2`
   color: var(--black);
   margin-bottom: 25px;
   text-align: center;
+  @media (max-width: 600px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const TogglerForm = styled.div`
@@ -113,6 +126,9 @@ const TogglerForm = styled.div`
   display: flex;
   border-radius: 6px;
   margin-bottom: 32px;
+  @media (max-width: 600px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const ToggleLink = styled(Link)<{ $current?: boolean }>`
@@ -137,11 +153,17 @@ const StyledLabelInput = styled(LabelInput)`
 `;
 const InputsContainer = styled.div`
   margin-bottom: 42px;
+  @media (max-width: 600px) {
+    margin-bottom: 24px;
+  }
 `;
 const InputWrap = styled.div`
   margin-bottom: 24px;
   &:last-child {
     margin-bottom: 0;
+  }
+  @media (max-width: 600px) {
+    margin-bottom: 20px;
   }
 `;
 const InputErrorText = styled.p`
@@ -163,7 +185,16 @@ const TextPrivacyPolicy = styled.p`
   text-align: center;
   color: var(--black);
   margin-bottom: 18px;
+  & a {
+    color: var(--black);
+  }
+  & a:hover {
+    text-decoration: underline;
+  }
   & b {
     font-weight: 500;
+  }
+  @media (max-width: 600px) {
+    margin-bottom: 20px;
   }
 `;

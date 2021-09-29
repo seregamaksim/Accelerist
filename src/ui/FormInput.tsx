@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styled, { DefaultTheme } from 'styled-components';
+import styled from 'styled-components';
 import { Field } from 'formik';
 import hideEye from '../static/images/password-eye-hide.svg';
 import showEye from '../static/images/password-eye-show.svg';

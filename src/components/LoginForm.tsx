@@ -1,5 +1,5 @@
 import styled, { ThemeProvider } from 'styled-components';
-import { Formik, Field, Form, FormikHelpers } from 'formik';
+import { Formik, Form } from 'formik';
 import LabelInput from '../ui/LabelInput';
 import FormInput from '../ui/FormInput';
 import Button from '../ui/Button';
@@ -7,8 +7,10 @@ import { theme } from '../theme';
 import { Link } from 'react-router-dom';
 import Checkbox from '../ui/Checkbox';
 import * as Yup from 'yup';
+import { useAppDispatch } from '../store/hooks';
+import { signInPost } from '../store/auth/thunks';
 
-interface IFormValues {
+export interface ILoginFormValues {
   email: string;
   password: string;
   rememberPassword: boolean;
@@ -18,12 +20,16 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required('Required'),
 });
 export default function LoginForm() {
-  const initialValues: IFormValues = {
+  const dispatch = useAppDispatch();
+  const initialValues: ILoginFormValues = {
     email: '',
     password: '',
     rememberPassword: false,
   };
 
+  function submitVal(values: ILoginFormValues) {
+    dispatch(signInPost(values));
+  }
   return (
     <>
       <Title>Welcome to Accelerist</Title>
@@ -39,12 +45,7 @@ export default function LoginForm() {
       <StyledFormik
         initialValues={initialValues}
         validationSchema={LoginSchema}
-        onSubmit={(values, { setSubmitting }: FormikHelpers<IFormValues>) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 500);
-        }}
+        onSubmit={submitVal}
       >
         {({ errors, touched, values, isValid }) => (
           <Form>
@@ -83,7 +84,7 @@ export default function LoginForm() {
                 label="Remember"
                 checked={values.rememberPassword}
               />
-              <ForgotLink to="/reset">Forgot Password?</ForgotLink>
+              <ForgotLink to="#">Forgot Password?</ForgotLink>
             </RememberForgotWrap>
             <ThemeProvider theme={theme.primary}>
               <StyledButton text="Login" type="submit" disabled={!isValid} />
@@ -102,6 +103,9 @@ const Title = styled.h2`
   color: var(--black);
   margin-bottom: 25px;
   text-align: center;
+  @media (max-width: 600px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const TogglerForm = styled.div`
@@ -111,6 +115,9 @@ const TogglerForm = styled.div`
   display: flex;
   border-radius: 6px;
   margin-bottom: 32px;
+  @media (max-width: 600px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const ToggleLink = styled(Link)<{ $current?: boolean }>`
@@ -141,6 +148,9 @@ const InputWrap = styled.div`
   &:last-child {
     margin-bottom: 0;
   }
+  @media (max-width: 600px) {
+    margin-bottom: 20px;
+  }
 `;
 const InputErrorText = styled.p`
   font-size: 12px;
@@ -159,6 +169,9 @@ const RememberForgotWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 60px;
+  @media (max-width: 600px) {
+    margin-bottom: 49px;
+  }
 `;
 
 const ForgotLink = styled(Link)`

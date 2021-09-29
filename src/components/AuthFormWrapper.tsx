@@ -17,6 +17,9 @@ const Root = styled.div`
 `;
 const Wrapper = styled.div`
   padding: 40px;
+  @media (max-width: 600px) {
+    padding: 24px 16px;
+  }
 `;
 
 export default AuthFormWrapper;

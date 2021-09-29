@@ -1,7 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { http } from '../../services/http';
+import { createSlice } from '@reduxjs/toolkit';
 
-import { signUpPost } from './thunks';
+import { signUpPost, signInPost } from './thunks';
 
 const initialState = {
   token: '',
@@ -9,10 +8,6 @@ const initialState = {
   user: {},
 };
 
-// const signUpPost = createAsyncThunk('auth/signUp', async (values: any) => {
-//   const response = await http.post('/auth/sign_up', values);
-//   return response.data;
-// });
 const authSlice = createSlice({
   initialState,
   name: 'auth',
@@ -30,14 +25,17 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(signUpPost.fulfilled, (state, { payload }) => {
-      state.token = payload.accessToken;
-      state.user = payload.user;
-      state.isAuthorized = true;
-      console.log('state', state);
-
-      // console.log('action', action);
-    });
+    builder
+      .addCase(signUpPost.fulfilled, (state, { payload }) => {
+        state.token = payload.accessToken;
+        state.user = payload.user;
+        state.isAuthorized = true;
+      })
+      .addCase(signInPost.fulfilled, (state, { payload }) => {
+        state.token = payload.accessToken;
+        state.user = payload.user;
+        state.isAuthorized = true;
+      });
   },
 });
 

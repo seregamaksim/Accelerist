@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import checkIcon from '../static/images/check.svg';
 import checkDisabledIcon from '../static/images/check-disabled.svg';
-import { useField, Field } from 'formik';
+import { Field } from 'formik';
 
 interface ICheckbox {
   name: string;

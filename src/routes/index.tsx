@@ -1,37 +1,28 @@
-import { useEffect } from 'react';
-import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
-import Home from '../components/Home';
-import Login from '../components/Login';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import Dashboard from '../pages/Dashboard';
+import Home from '../pages/Home';
+import Login from '../pages/Login';
 import PrivateRoute from '../components/PrivateRouter';
-import SignUp from '../components/SignUp';
+import SignUp from '../pages/SignUp';
 import { selectors } from '../store/ducks';
 import { useAppSelector } from '../store/hooks';
-import AuthRoutes from './AuthRoutes';
-import UserRoutes from './UserRoutes';
 
 export default function Routes() {
-  let history = useHistory();
   const isAuthohorized = useAppSelector(selectors.auth.isAuthohorized);
-  useEffect(() => {
-    if (isAuthohorized) {
-      console.log('isAuthohorized');
-
-      history.push('/');
-    }
-  }, [isAuthohorized]);
   return (
     <Switch>
-      {/* <UserRoutes /> */}
       <PrivateRoute exact path="/">
         <Home />
       </PrivateRoute>
+      <PrivateRoute path="/dashboard">
+        <Dashboard />
+      </PrivateRoute>
       <Route path="/signup">
-        <SignUp />
+        {isAuthohorized ? <Redirect to="/dashboard" /> : <SignUp />}
       </Route>
       <Route path="/login">
-        <Login />
+        {isAuthohorized ? <Redirect to="/dashboard" /> : <Login />}
       </Route>
-      {/* <AuthRoutes /> */}
     </Switch>
   );
 }

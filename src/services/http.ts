@@ -1,7 +1,7 @@
 import { API_URL } from '../constants';
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import { store } from '../store/store';
-import { actions } from '../store/ducks';
+// import { actions } from '../store/ducks';
 
 export class Http {
   constructor(private readonly _axios: AxiosInstance) {
@@ -17,13 +17,13 @@ export class Http {
   }
 
   private useInterceptors(): void {
-    // console.log('awd');
+    console.log('awd');
 
     this._axios.interceptors.response.use(
       undefined,
       (error: AxiosError): Promise<AxiosError> => {
         if (error.response?.status === 401) {
-          // store.dispatch(actions.auth.signOut());
+          // store.dispatch({ type: 'auth/signOut' });
         }
         return Promise.reject(error.response?.data);
       }
