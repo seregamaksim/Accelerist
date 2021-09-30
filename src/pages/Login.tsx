@@ -28,12 +28,13 @@ export default function Login() {
   );
 }
 const Root = styled.section`
-  height: 100vh;
+  min-height: 100vh;
   background: url(${background}) no-repeat center;
   background-size: cover;
 `;
 const Container = styled.div`
   padding-top: 72px;
+  padding-bottom: 30px;
   padding-left: 30px;
   padding-right: 30px;
   position: relative;

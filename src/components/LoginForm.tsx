@@ -15,10 +15,12 @@ export interface ILoginFormValues {
   password: string;
   rememberPassword: boolean;
 }
+
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email('Incorrect email format').required('Required'),
   password: Yup.string().required('Required'),
 });
+
 export default function LoginForm() {
   const dispatch = useAppDispatch();
   const initialValues: ILoginFormValues = {

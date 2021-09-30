@@ -13,12 +13,14 @@ export interface IRegistrationFormValues {
   email: string;
   password: string;
 }
+
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email('Incorrect email format').required('Required'),
   password: Yup.string()
     .min(6, 'Minimum password length is 6 symbols')
     .required('Required'),
 });
+
 export default function RegisterForm() {
   const dispatch = useAppDispatch();
   const history = useHistory();
