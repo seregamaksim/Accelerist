@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Header from '../components/Header';
+import AuthHeader from '../components/AuthHeader';
 import background from '../static/images/auth-bg.png';
 import AuthFormWrapper from '../components/AuthFormWrapper';
 import LoginForm from '../components/LoginForm';
@@ -9,7 +9,7 @@ import linkedinIcon from '../static/images/linkedin.svg';
 export default function Login() {
   return (
     <Root>
-      <Header />
+      <AuthHeader />
       <Container>
         <AuthFormWrapper>
           <LoginForm />

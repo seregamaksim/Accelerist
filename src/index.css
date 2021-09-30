@@ -1,14 +1,19 @@
 :root {
+  /* colors */
   --black: #122434;
   --white: #fff;
   --blue: #2baee0;
   --secondaryBlue: #caf0ff;
   --lightBlue: #ceedf9;
+  --headerBlue: #d4f3ff;
   --gray: #bfbfbf;
   --darkGray: #737373;
   --lightGray: #e8e8e8;
   --disabledGray: #f9f9f9;
   --red: #f05658;
+
+  /* padding */
+  --paddingL: 4.17%;
 }
 @font-face {
   font-family: 'Rubik';
@@ -42,6 +47,7 @@
 body {
   margin: 0;
   font-family: 'Rubik', Arial, Helvetica, sans-serif;
+  background-color: #f9f9f9;
 }
 
 img {

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import logo from '../static/images/header-logo.svg';
 
-export default function Header() {
+export default function AuthHeader() {
   return (
     <HeaderRoot>
       <HeaderContainer>

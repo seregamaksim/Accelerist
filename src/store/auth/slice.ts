@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { signUpPost, signInPost } from './thunks';
+import { IAuthResponse } from './types';
 
 const initialState = {
   token: '',
@@ -12,12 +13,6 @@ const authSlice = createSlice({
   initialState,
   name: 'auth',
   reducers: {
-    signInSuccess(state) {
-      console.log('as');
-    },
-    signUpSuccess(state) {
-      console.log('as');
-    },
     signOut(state) {
       state.token = '';
       state.isAuthorized = false;
@@ -26,16 +21,22 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(signUpPost.fulfilled, (state, { payload }) => {
-        state.token = payload.accessToken;
-        state.user = payload.user;
-        state.isAuthorized = true;
-      })
-      .addCase(signInPost.fulfilled, (state, { payload }) => {
-        state.token = payload.accessToken;
-        state.user = payload.user;
-        state.isAuthorized = true;
-      });
+      .addCase(
+        signUpPost.fulfilled,
+        (state, { payload }: PayloadAction<IAuthResponse>) => {
+          state.token = payload.accessToken;
+          state.user = payload.user;
+          state.isAuthorized = true;
+        }
+      )
+      .addCase(
+        signInPost.fulfilled,
+        (state, { payload }: PayloadAction<IAuthResponse>) => {
+          state.token = payload.accessToken;
+          state.user = payload.user;
+          state.isAuthorized = true;
+        }
+      );
   },
 });
 

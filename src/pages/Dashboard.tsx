@@ -1,15 +1,17 @@
 import { ThemeProvider } from 'styled-components';
+import MainLayout from '../layouts/MainLayout';
 import { actions } from '../store/ducks';
 import { useAppDispatch } from '../store/hooks';
 import { theme } from '../theme';
 import Button from '../ui/Button';
+import SubHeader from '../components/SubHeader';
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
 
   return (
-    <>
-      <h1>Dashboard</h1>
+    <MainLayout>
+      <SubHeader title="Dashboard"></SubHeader>
       <ThemeProvider theme={theme.primary}>
         <Button
           text="Log Out"
@@ -17,6 +19,6 @@ export default function Dashboard() {
           onClick={() => dispatch(actions.auth.signOut())}
         />
       </ThemeProvider>
-    </>
+    </MainLayout>
   );
 }
