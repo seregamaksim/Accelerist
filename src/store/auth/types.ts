@@ -1,3 +1,8 @@
+export interface IIntialState {
+  token: string;
+  user: IUser | null;
+  isAuthorized: boolean;
+}
 export interface IAuthResponse {
   accessToken: string;
   user: IUser;

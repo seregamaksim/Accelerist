@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { signUpPost, signInPost } from './thunks';
-import { IAuthResponse } from './types';
+import { IAuthResponse, IIntialState } from './types';
 
-const initialState = {
+const initialState: IIntialState = {
   token: '',
   isAuthorized: false,
-  user: {},
+  user: null,
 };
 
 const authSlice = createSlice({
@@ -16,7 +16,7 @@ const authSlice = createSlice({
     signOut(state) {
       state.token = '';
       state.isAuthorized = false;
-      state.user = {};
+      state.user = null;
     },
   },
   extraReducers: (builder) => {

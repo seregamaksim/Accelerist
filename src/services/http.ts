@@ -17,8 +17,6 @@ export class Http {
   }
 
   private useInterceptors(): void {
-    console.log('awd');
-
     this._axios.interceptors.response.use(
       undefined,
       (error: AxiosError): Promise<AxiosError> => {
