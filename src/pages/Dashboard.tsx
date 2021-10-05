@@ -1,12 +1,12 @@
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import MainLayout from '../layouts/MainLayout';
 import { actions } from '../store/ducks';
 import { useAppDispatch } from '../store/hooks';
-import { theme } from '../theme';
-import Button from '../ui/Button';
 import SubHeader from '../components/SubHeader';
 import { useEffect } from 'react';
 import { fetchSavedList } from '../store/savedList/thunks';
+import SavedList from '../components/SavedList';
+import Container from '../components/Container';
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
@@ -20,7 +20,18 @@ export default function Dashboard() {
   }, [dispatch]);
   return (
     <MainLayout>
-      <SubHeader title="Dashboard"></SubHeader>
+      <StyledSubHeader title="Dashboard" />
+      <Container>
+        <Wrapper>
+          <SavedList />
+        </Wrapper>
+      </Container>
     </MainLayout>
   );
 }
+const Wrapper = styled.div`
+  max-width: 1096px;
+`;
+const StyledSubHeader = styled(SubHeader)`
+  margin-bottom: 32px;
+`;

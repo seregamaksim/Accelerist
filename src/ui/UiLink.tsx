@@ -1,34 +1,22 @@
+import { ComponentProps, ElementType, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface Props {
   text: string;
-  type: 'button' | 'submit' | 'reset' | undefined;
   className?: string;
-  disabled?: boolean;
-  onClick?: () => void;
+  to: string;
 }
 
-export default function Button({
-  text,
-  className,
-  type = 'button',
-  disabled = false,
-  onClick,
-}: Props) {
+export default function UiLink({ text, className, to }: Props) {
   return (
-    <StyledButton
-      className={className}
-      type={type}
-      disabled={disabled}
-      onClick={onClick}
-    >
+    <StyledLink className={className} to={to}>
       {text}
-    </StyledButton>
+    </StyledLink>
   );
 }
 
-const StyledButton = styled.button`
+const StyledLink = styled(Link)`
   font-family: inherit;
   font-size: ${(props) => props.theme.fonts.size};
   line-height: ${(props) => props.theme.fonts.lineHeight};

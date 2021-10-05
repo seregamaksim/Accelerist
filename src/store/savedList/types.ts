@@ -14,7 +14,7 @@ export interface InitialState {
 export interface Item {
   id: string;
   name: string;
-  filters: {};
+  filters: { [key: string]: string };
   prospectsAvailable: number;
   lastAuthor: IUser;
   createdAt: string;

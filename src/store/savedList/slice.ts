@@ -21,6 +21,7 @@ const savedListSlice = createSlice({
     builder.addCase(
       fetchSavedList.fulfilled,
       (state, { payload }: PayloadAction<SavedListResponse>) => {
+        console.log('payload', payload);
         state.items = payload.items;
         state.meta = payload.meta;
       }

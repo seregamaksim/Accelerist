@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import emptyUserIcon from '../static/images/user.svg';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { getFullName } from '../helpers/getFullName';
 
 export default function HeaderUserInfo() {
   const dispatch = useAppDispatch();
@@ -46,11 +47,7 @@ export default function HeaderUserInfo() {
           $empty={avatarKey ? false : true}
         />
       </UserAvatarWrap>
-      <UserName>
-        {userName.firstName && userName.lastName
-          ? `${userName.firstName} ${userName.lastName}`
-          : 'No name'}
-      </UserName>
+      <UserName>{getFullName(userName)}</UserName>
       <DropdownOpenBtn onClick={() => setIsOpenDropdown(!isOpenDropdown)} />
       <Dropdown $open={isOpenDropdown}>
         <DropdownList>
