@@ -12,8 +12,7 @@ interface ISavedItemProps {
 
 export default function SavedItem({ data, className }: ISavedItemProps) {
   const [filters, setFilters] = useState<string[]>(Object.values(data.filters));
-  const dataSa = moment(data.updatedAt, 'MMM Do YY').format();
-  console.log('dataSa', dataSa);
+  const dateUpdate = moment('2021-10-05T11:40:06.290Z').format('D MMM YYYY');
 
   return (
     <Root className={className}>
@@ -46,7 +45,7 @@ export default function SavedItem({ data, className }: ISavedItemProps) {
             <UserMiniature data={data.lastAuthor} withRole={true} />
             <ItemLastActivityWrap>
               <ItemLastActivityTitle>Last Activity</ItemLastActivityTitle>
-              <ItemLastActivityDate>{/* {} */}</ItemLastActivityDate>
+              <ItemLastActivityDate>{dateUpdate}</ItemLastActivityDate>
             </ItemLastActivityWrap>
           </ItemLastUserInfo>
         </ItemContent>
