@@ -6,16 +6,21 @@ import emptyHeartIcon from '../static/images/hearts-empty.svg';
 import UiLink from '../ui/UiLink';
 import { theme } from '../theme';
 import { useEffect } from 'react';
-import { fetchFavoritesList } from '../store/companies/thunks';
+import { fetchFavoritesList } from '../store/favoriteCompanies/thunks';
+import CompanyCardMini from './CompanyCardMini';
+import CompanyCard from './CompanyCard';
 
 interface IFavoritesListProps {
   className?: string;
+  miniCards?: boolean;
 }
 
-export default function FavoritesList({ ...props }: IFavoritesListProps) {
-  const items = useAppSelector(selectors.companies.selectFavoritesList);
+export default function FavoritesList({
+  miniCards = false,
+  ...props
+}: IFavoritesListProps) {
+  const items = useAppSelector(selectors.favoriteCompanies.selectFavoritesList);
   const dispatch = useAppDispatch();
-  // console.log('favorites', items);
   const query = {
     page: 1,
     limit: 6,
@@ -27,9 +32,13 @@ export default function FavoritesList({ ...props }: IFavoritesListProps) {
     <Root {...props}>
       {items.length > 0 ? (
         <ContentWrapper>
-          {/* {items.map((item) => (
-            <SavedItem key={item.id} data={item} />
-          ))} */}
+          {items.map((item) =>
+            miniCards ? (
+              <CompanyCardMini key={item.id} data={item} />
+            ) : (
+              <CompanyCard key={item.id} />
+            )
+          )}
         </ContentWrapper>
       ) : (
         <EmptyList>

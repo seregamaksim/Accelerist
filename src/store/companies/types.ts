@@ -68,7 +68,7 @@ export interface Company {
   favoriteCompanies: IFavoritesCompany[] | [];
   score: number;
   like: boolean;
-  crsFocus: [] | any[];
+  crsFocus: [];
 }
 export interface IFavoritesCompany {
   id: string;

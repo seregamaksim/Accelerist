@@ -43,7 +43,7 @@ export default function Dashboard() {
                 see more
               </DashboardBlockHeadLink>
             </DashboardBlockHead>
-            <FavoritesList />
+            <FavoritesList miniCards />
           </DashboardBlock>
         </Wrapper>
       </Container>

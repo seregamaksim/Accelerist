@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import { InitialState, SavedListResponse } from './types';
+import { fetchFavoritesList } from './thunks';
+import { InitialState, FavoriteCompaniesResponse } from './types';
 
 const initialState: InitialState = {
   items: [],
@@ -17,7 +17,16 @@ const companiesSlice = createSlice({
   initialState,
   name: 'companies',
   reducers: {},
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder.addCase(
+      fetchFavoritesList.fulfilled,
+      (state, { payload }: PayloadAction<FavoriteCompaniesResponse>) => {
+        console.log('favorites', payload);
+        state.items = payload.items;
+        state.meta = payload.meta;
+      }
+    );
+  },
 });
 
 const actions = { ...companiesSlice.actions };
