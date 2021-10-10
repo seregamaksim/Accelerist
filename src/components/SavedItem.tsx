@@ -12,7 +12,7 @@ interface ISavedItemProps {
 
 export default function SavedItem({ data, className }: ISavedItemProps) {
   const [filters, setFilters] = useState<string[]>(Object.values(data.filters));
-  const dateUpdate = moment('2021-10-05T11:40:06.290Z').format('D MMM YYYY');
+  const dateUpdate = moment(data.updatedAt).format('D MMM YYYY');
 
   return (
     <Root className={className}>

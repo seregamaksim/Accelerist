@@ -12,7 +12,6 @@ interface ISavedListProps {
 
 export default function SavedList({ ...props }: ISavedListProps) {
   const items = useAppSelector(selectors.savedList.selectSavedList);
-  console.log(items);
 
   return (
     <Root {...props}>

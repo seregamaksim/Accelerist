@@ -9,6 +9,7 @@ import SavedList from '../components/SavedList';
 import Container from '../components/Container';
 import { Link } from 'react-router-dom';
 import FavoritesList from '../components/FavoritesList';
+import Reports from '../components/Reports';
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
@@ -44,6 +45,12 @@ export default function Dashboard() {
               </DashboardBlockHeadLink>
             </DashboardBlockHead>
             <FavoritesList miniCards />
+          </DashboardBlock>
+          <DashboardBlock>
+            <DashboardBlockHead>
+              <DashboardBlockHeadTitle>Reports</DashboardBlockHeadTitle>
+            </DashboardBlockHead>
+            <Reports />
           </DashboardBlock>
         </Wrapper>
       </Container>

@@ -13,15 +13,14 @@ const initialState: InitialState = {
   },
 };
 
-const companiesSlice = createSlice({
+const favoriteCompanies = createSlice({
   initialState,
-  name: 'companies',
+  name: 'favoriteCompanies',
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(
       fetchFavoritesList.fulfilled,
       (state, { payload }: PayloadAction<FavoriteCompaniesResponse>) => {
-        console.log('favorites', payload);
         state.items = payload.items;
         state.meta = payload.meta;
       }
@@ -29,7 +28,7 @@ const companiesSlice = createSlice({
   },
 });
 
-const actions = { ...companiesSlice.actions };
-const reducer = companiesSlice.reducer;
+const actions = { ...favoriteCompanies.actions };
+const reducer = favoriteCompanies.reducer;
 
 export { actions, reducer };

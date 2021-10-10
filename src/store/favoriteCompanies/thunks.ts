@@ -4,7 +4,7 @@ import { http } from '../../services/http';
 import { QueryParams, FavoriteCompaniesResponse } from './types';
 
 export const fetchFavoritesList = createAsyncThunk(
-  'companies/favoritesList',
+  'favoriteCompanies/favoritesList',
   async (query: QueryParams) => {
     const url = `/companies/favorites?page=${query.page}&limit=${query.limit}`;
     const { data }: AxiosResponse<FavoriteCompaniesResponse> = await http.get(

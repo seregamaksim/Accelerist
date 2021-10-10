@@ -5,12 +5,14 @@ import Avatar from './Avatar';
 
 interface IUserMiniatureProps {
   data: IUser;
+  sizeImg?: number;
   withRole?: boolean;
 }
 
 export default function UserMiniature({
   data,
   withRole = false,
+  sizeImg = 40,
 }: IUserMiniatureProps) {
   const fullName = getFullName({
     firstName: data.firstName,
@@ -18,7 +20,7 @@ export default function UserMiniature({
   });
   return (
     <Root>
-      <StyledAvatar name={fullName} avatarKey={data.avatarKey} size={40} />
+      <StyledAvatar name={fullName} avatarKey={data.avatarKey} size={sizeImg} />
       <UserInfo>
         <UserName>{fullName}</UserName>
         {withRole && <UserRole>{data.role}</UserRole>}

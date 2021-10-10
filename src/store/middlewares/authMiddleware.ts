@@ -13,8 +13,8 @@ export const authMiddleware =
       action.type === signInPost.fulfilled.type ||
       action.type === signUpPost.fulfilled.type
     ) {
-      action.payload?.token &&
-        http.setAuthorizationHeader(action.payload.token);
+      action.payload?.accessToken &&
+        http.setAuthorizationHeader(action.payload.accessToken);
     }
 
     if (action.type === REHYDRATE) {

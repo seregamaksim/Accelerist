@@ -76,6 +76,7 @@ const Overlay = styled.div<{ isActive: boolean }>`
   pointer-events: none;
   background: rgba(0, 0, 0, 0.4);
   transition: opacity 0.3s ease-out;
+  z-index: 4;
   @media (max-width: 1024px) {
     display: block;
   }
@@ -125,6 +126,7 @@ const HeaderFixedMenuWrapper = styled.div.attrs<{ isActive: boolean }>(
     padding: 130px 32px 32px 40px;
     transform: translateX(100%);
     transition: transform 0.3s ease-out;
+    z-index: 5;
     &.active {
       transform: translateX(0);
     }
