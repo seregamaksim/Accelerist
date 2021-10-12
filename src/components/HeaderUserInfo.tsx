@@ -52,9 +52,6 @@ export default function HeaderUserInfo() {
       <Dropdown $open={isOpenDropdown}>
         <DropdownList>
           <DropdownItem>
-            <DropdownLink to="/profile/">Profile</DropdownLink>
-          </DropdownItem>
-          <DropdownItem>
             <DropdownLogout
               type="button"
               onClick={() => dispatch(actions.auth.signOut())}

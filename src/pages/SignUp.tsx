@@ -13,7 +13,7 @@ export default function SignUp() {
       <Container>
         <AuthFormWrapper>
           <RegisterForm />
-          <OtherAuthWrap>
+          {/* <OtherAuthWrap>
             <OtherAuthText>or continue with</OtherAuthText>
             <OtherAuthList>
               <OtherAuthItem>
@@ -21,7 +21,7 @@ export default function SignUp() {
                 <OtherAuthItemIcon src={linkedinIcon} alt="LinkedIn" />
               </OtherAuthItem>
             </OtherAuthList>
-          </OtherAuthWrap>
+          </OtherAuthWrap> */}
         </AuthFormWrapper>
       </Container>
     </Root>

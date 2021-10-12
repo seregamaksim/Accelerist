@@ -11,7 +11,9 @@ interface ISavedItemProps {
 }
 
 export default function SavedItem({ data, className }: ISavedItemProps) {
-  const [filters, setFilters] = useState<string[]>(Object.values(data.filters));
+  const [filters, setFilters] = useState<string[]>(
+    data.filters ? Object.values(data.filters) : ['']
+  );
   const dateUpdate = moment(data.updatedAt).format('D MMM YYYY');
 
   return (

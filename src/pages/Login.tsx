@@ -13,7 +13,7 @@ export default function Login() {
       <Container>
         <AuthFormWrapper>
           <LoginForm />
-          <OtherAuthWrap>
+          {/* <OtherAuthWrap>
             <OtherAuthText>or continue with</OtherAuthText>
             <OtherAuthList>
               <OtherAuthItem>
@@ -21,7 +21,7 @@ export default function Login() {
                 <OtherAuthItemIcon src={linkedinIcon} alt="LinkedIn" />
               </OtherAuthItem>
             </OtherAuthList>
-          </OtherAuthWrap>
+          </OtherAuthWrap> */}
         </AuthFormWrapper>
       </Container>
     </Root>

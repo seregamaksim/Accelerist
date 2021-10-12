@@ -1,13 +1,16 @@
 import { FC } from 'react';
+import styled from 'styled-components';
 import MainHeader from '../components/MainHeader';
 
 const MainLayout: FC = (props) => {
   return (
     <>
       <MainHeader />
-      <div>{props.children}</div>
+      <MainWrapper>{props.children}</MainWrapper>
     </>
   );
 };
-
+const MainWrapper = styled.div`
+  height: 100%;
+`;
 export default MainLayout;

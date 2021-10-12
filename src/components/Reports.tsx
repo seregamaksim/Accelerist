@@ -1,11 +1,13 @@
 import moment from 'moment';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { selectors } from '../store/ducks';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { fetchLastLogins } from '../store/lastLogins/thunks';
 import { fetchTeam } from '../store/team/thunks';
 import UserMiniature from './UserMiniature';
+import backArrow from '../static/images/back-arrow.svg';
 
 export default function Reports() {
   const dispatch = useAppDispatch();
@@ -34,7 +36,13 @@ export default function Reports() {
           </InfoBlock>
         </Section>
         <Section>
-          <SectionTitle>Top Matched</SectionTitle>
+          <SectionTitle>Prospect Navigator</SectionTitle>
+          <ProspectLink
+            target="_blank"
+            to={{ pathname: 'https://accelerist.com/insights-2/' }}
+          >
+            Go to page
+          </ProspectLink>
         </Section>
         <Section>
           <SectionTitle>Last Login</SectionTitle>
@@ -125,4 +133,25 @@ const LastLoginDate = styled.p`
   line-height: 18px;
 
   color: var(--darkGray);
+`;
+const ProspectLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  padding: 24px;
+  height: 71px;
+  background-color: #f9f9f9;
+  color: var(--black);
+  border-radius: 4px;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 24px;
+    transform: translateY(-50%) rotate(180deg);
+    width: 12px;
+    height: 20px;
+    background: url(${backArrow}) no-repeat center;
+    background-size: cover;
+  }
 `;
