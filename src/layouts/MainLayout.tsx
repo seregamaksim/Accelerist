@@ -11,6 +11,6 @@ const MainLayout: FC = (props) => {
   );
 };
 const MainWrapper = styled.div`
-  height: 100%;
+  height: calc(100% - 80px);
 `;
 export default MainLayout;

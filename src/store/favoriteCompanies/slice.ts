@@ -21,6 +21,8 @@ const favoriteCompanies = createSlice({
     builder.addCase(
       fetchFavoritesList.fulfilled,
       (state, { payload }: PayloadAction<FavoriteCompaniesResponse>) => {
+        console.log('payload.meta', payload.meta);
+
         state.items = payload.items;
         state.meta = payload.meta;
       }

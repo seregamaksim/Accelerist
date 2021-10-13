@@ -1,7 +1,7 @@
 import styled, { ThemeProvider } from 'styled-components';
 import MainLayout from '../layouts/MainLayout';
-import { actions } from '../store/ducks';
-import { useAppDispatch } from '../store/hooks';
+import { actions, selectors } from '../store/ducks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import SubHeader from '../components/SubHeader';
 import { useEffect } from 'react';
 import { fetchSavedList } from '../store/savedList/thunks';
@@ -10,16 +10,28 @@ import Container from '../components/Container';
 import { Link } from 'react-router-dom';
 import FavoritesList from '../components/FavoritesList';
 import Reports from '../components/Reports';
+import EmptySavedList from '../components/EmptySavedList';
+import { fetchFavoritesList } from '../store/favoriteCompanies/thunks';
+import EmptyFavoritesList from '../components/EmptyFavoritesList';
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
+  const savedListItems = useAppSelector(selectors.savedList.selectSavedList);
+  const favoriteListItems = useAppSelector(
+    selectors.favoriteCompanies.selectFavoritesList
+  );
   const querySavedList = {
     page: 1,
     limit: 2,
   };
+  const queryFavoritesList = {
+    page: 1,
+    limit: 6,
+  };
 
   useEffect(() => {
     dispatch(fetchSavedList(querySavedList));
+    dispatch(fetchFavoritesList(queryFavoritesList));
   }, [dispatch]);
   return (
     <MainLayout>
@@ -35,7 +47,11 @@ export default function Dashboard() {
                 see more
               </DashboardBlockHeadLink>
             </DashboardBlockHead>
-            <SavedList />
+            {savedListItems.length > 0 ? (
+              <SavedList data={savedListItems} />
+            ) : (
+              <EmptySavedList />
+            )}
           </DashboardBlock>
           <DashboardBlock>
             <DashboardBlockHead>
@@ -44,7 +60,11 @@ export default function Dashboard() {
                 see more
               </DashboardBlockHeadLink>
             </DashboardBlockHead>
-            <FavoritesList miniCards />
+            {favoriteListItems.length > 0 ? (
+              <FavoritesList data={favoriteListItems} miniCards />
+            ) : (
+              <StyledEmptyFavoritesList />
+            )}
           </DashboardBlock>
           <DashboardBlock>
             <DashboardBlockHead>
@@ -68,6 +88,8 @@ const StyledSubHeader = styled(SubHeader)`
   margin-bottom: 32px;
 `;
 const DashboardBlock = styled.div<{ twoColumns?: boolean }>`
+  display: flex;
+  flex-direction: column;
   grid-column: ${(props) => (props.twoColumns ? 'span 2' : '')};
 `;
 const DashboardBlockHead = styled.div`
@@ -89,4 +111,7 @@ const DashboardBlockHeadLink = styled(Link)`
   &:hover {
     text-decoration: underline;
   }
+`;
+const StyledEmptyFavoritesList = styled(EmptyFavoritesList)`
+  flex: 1;
 `;
