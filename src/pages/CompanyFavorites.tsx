@@ -3,13 +3,15 @@ import styled from 'styled-components';
 import Container from '../components/Container';
 import EmptyFavoritesList from '../components/EmptyFavoritesList';
 import FavoritesList from '../components/FavoritesList';
-// import PageNavigation from '../components/PageNavigation';
 import SubHeader from '../components/SubHeader';
 import MainLayout from '../layouts/MainLayout';
 import { selectors } from '../store/ducks';
 import { fetchFavoritesList } from '../store/favoriteCompanies/thunks';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import backArrow from '../static/images/back-arrow.svg';
+import { useBorberNavigation } from '../hooks/useBorberNavigation';
+import { useQuery } from '../hooks/useQuery';
+import { useHistory, useLocation } from 'react-router';
 
 export default function CompanyFavorites() {
   const dispatch = useAppDispatch();
@@ -17,30 +19,33 @@ export default function CompanyFavorites() {
     selectors.favoriteCompanies.selectFavoritesList
   );
   const metaItems = useAppSelector(selectors.favoriteCompanies.selectMeta);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [queryFavoriteList, setQueryFavoriteList] = useState({
-    page: 1,
-    limit: 12,
-  });
-  function nextPage() {
-    // setQueryFavoriteList({
-    //   page: 10,
-    //   limit: 12,
-    // });++
-    setCurrentPage((prevVal) => prevVal + 1);
-    console.log('currentPage', currentPage);
-    dispatch(fetchFavoritesList({ page: currentPage, limit: 12 }));
-  }
-  function prevPage() {
-    setCurrentPage((prevVal) => prevVal - 1);
-    console.log('currentPage', currentPage);
+  const navigationBorders = useBorberNavigation(metaItems);
+  const queryPage = useQuery();
+  const history = useHistory();
+  const location = useLocation();
 
-    dispatch(fetchFavoritesList({ page: currentPage, limit: 12 }));
+  function fetchNavigate(direction: string) {
+    const currentPage =
+      direction === 'prev'
+        ? Number(metaItems.currentPage) - 1
+        : Number(metaItems.currentPage) + 1;
+    dispatch(
+      fetchFavoritesList({
+        page: currentPage,
+        limit: 12,
+      })
+    );
+    history.push({
+      search: `?page=${currentPage}`,
+    });
   }
-
   useEffect(() => {
-    console.log('currentPage', currentPage);
-    dispatch(fetchFavoritesList(queryFavoriteList));
+    dispatch(
+      fetchFavoritesList({
+        page: queryPage.get('page') ? Number(queryPage.get('page')) : 1,
+        limit: 12,
+      })
+    );
   }, [dispatch]);
   return (
     <MainLayout>
@@ -50,24 +55,24 @@ export default function CompanyFavorites() {
           <TotalCount>{metaItems.totalItems} companies</TotalCount>
           {metaItems.totalItems > 0 && (
             <PageNavigation>
-              {Number(metaItems.currentPage) <= metaItems.totalPages ? (
-                <PageNavigationBtn onClick={prevPage} />
+              {Number(metaItems.currentPage) !== 1 ? (
+                <PageNavigationBtn onClick={() => fetchNavigate('prev')} />
               ) : null}
-              <PageNavigationCounter>{currentPage}</PageNavigationCounter>
+              <PageNavigationCounter>{navigationBorders}</PageNavigationCounter>
               {Number(metaItems.currentPage) !== metaItems.totalPages ? (
-                <PageNavigationBtn $rotate={true} onClick={nextPage} />
+                <PageNavigationBtn
+                  $rotate={true}
+                  onClick={() => fetchNavigate('next')}
+                />
               ) : null}
             </PageNavigation>
           )}
-
-          {/* <PageNavigation call={fetchFavoritesList} /> */}
         </InfoNavigation>
         {favoriteListItems.length > 0 ? (
           <FavoritesList data={favoriteListItems} miniCards />
         ) : (
           <StyledEmptyFavoritesList />
         )}
-        {/* <StyledFavoritesList miniCards /> */}
       </Container>
     </MainLayout>
   );
