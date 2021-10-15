@@ -1,14 +1,21 @@
 import { useEffect } from 'react';
-import { Route, Redirect, useHistory } from 'react-router-dom';
+import { Route, Redirect, useHistory, useLocation } from 'react-router-dom';
 import { selectors } from '../store/ducks';
 import { useAppSelector } from '../store/hooks';
 
-export default function PrivateRoute({ children, ...rest }: any) {
-  let history = useHistory();
+interface IPrivateRouteProps {
+  path: string;
+  children: JSX.Element;
+  exact?: boolean;
+}
+
+const PrivateRoute = ({ children, ...rest }: IPrivateRouteProps) => {
+  const history = useHistory();
+  const location = useLocation();
   const isAuthohorized = useAppSelector(selectors.auth.isAuthohorized);
   useEffect(() => {
     if (isAuthohorized) {
-      history.push(rest.location.pathname);
+      history.push(`${location.pathname}${location.search}`);
     }
   }, [isAuthohorized]);
 
@@ -29,4 +36,6 @@ export default function PrivateRoute({ children, ...rest }: any) {
       }}
     />
   );
-}
+};
+
+export default PrivateRoute;

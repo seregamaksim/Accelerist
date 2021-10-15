@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchFavoritesList } from './thunks';
+import { dislikeCompany, fetchFavoritesList, likeCompany } from './thunks';
 import { InitialState, FavoriteCompaniesResponse } from './types';
 
 const initialState: InitialState = {
@@ -16,17 +16,33 @@ const initialState: InitialState = {
 const favoriteCompanies = createSlice({
   initialState,
   name: 'favoriteCompanies',
-  reducers: {},
+  reducers: {
+    removeItem: (state, { payload }: PayloadAction<string>) => {
+      const index = state.items.findIndex((item) => item.id === payload);
+      if (index !== -1) state.items.splice(index, 1);
+    },
+  },
   extraReducers: (builder) => {
-    builder.addCase(
-      fetchFavoritesList.fulfilled,
-      (state, { payload }: PayloadAction<FavoriteCompaniesResponse>) => {
-        console.log('payload.meta', payload.meta);
-
-        state.items = payload.items;
-        state.meta = payload.meta;
-      }
-    );
+    builder
+      .addCase(
+        fetchFavoritesList.fulfilled,
+        (state, { payload }: PayloadAction<FavoriteCompaniesResponse>) => {
+          state.items = payload.items;
+          state.meta = payload.meta;
+        }
+      )
+      .addCase(
+        likeCompany.fulfilled,
+        (state, { payload }: PayloadAction<any>) => {
+          console.log('like', payload);
+        }
+      )
+      .addCase(
+        dislikeCompany.fulfilled,
+        (state, { payload }: PayloadAction<any>) => {
+          console.log('dislike', payload);
+        }
+      );
   },
 });
 

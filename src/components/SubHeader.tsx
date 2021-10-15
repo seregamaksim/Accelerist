@@ -18,7 +18,7 @@ const SubHeader: FC<ISubHeader> = ({ title, className, backBtn = false }) => {
       <SubHeaderContainer>
         <SubHeaderTitleWrap>
           {backBtn ? (
-            <SubHeaderTitleLink to="" onClick={history.goBack}>
+            <SubHeaderTitleLink onClick={history.goBack}>
               <SubHeaderTitle>{title}</SubHeaderTitle>
             </SubHeaderTitleLink>
           ) : (
@@ -40,7 +40,8 @@ const SubHeaderContainer = styled(Container)`
 `;
 
 const SubHeaderTitleWrap = styled.div``;
-const SubHeaderTitleLink = styled(Link)`
+const SubHeaderTitleLink = styled.button`
+  cursor: pointer;
   display: inline-block;
   position: relative;
   padding-left: 44px;

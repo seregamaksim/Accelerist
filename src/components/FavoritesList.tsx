@@ -21,7 +21,7 @@ export default function FavoritesList({
           miniCards ? (
             <CompanyCardMini key={item.id} data={item} />
           ) : (
-            <CompanyCard key={item.id} />
+            <CompanyCard key={item.id} data={item} />
           )
         )}
       </ContentWrapper>
@@ -34,4 +34,8 @@ const ContentWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 `;

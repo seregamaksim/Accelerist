@@ -22,7 +22,6 @@ export default function CompanyFavorites() {
   const navigationBorders = useBorberNavigation(metaItems);
   const queryPage = useQuery();
   const history = useHistory();
-  const location = useLocation();
 
   function fetchNavigate(direction: string) {
     const currentPage =
@@ -39,6 +38,7 @@ export default function CompanyFavorites() {
       search: `?page=${currentPage}`,
     });
   }
+
   useEffect(() => {
     dispatch(
       fetchFavoritesList({
@@ -50,30 +50,34 @@ export default function CompanyFavorites() {
   return (
     <MainLayout>
       <StyledSubHeader title="Favorites" />
-      <Container>
-        <InfoNavigation>
-          <TotalCount>{metaItems.totalItems} companies</TotalCount>
-          {metaItems.totalItems > 0 && (
-            <PageNavigation>
-              {Number(metaItems.currentPage) !== 1 ? (
-                <PageNavigationBtn onClick={() => fetchNavigate('prev')} />
-              ) : null}
-              <PageNavigationCounter>{navigationBorders}</PageNavigationCounter>
-              {Number(metaItems.currentPage) !== metaItems.totalPages ? (
-                <PageNavigationBtn
-                  $rotate={true}
-                  onClick={() => fetchNavigate('next')}
-                />
-              ) : null}
-            </PageNavigation>
+      <StyledContainer>
+        <Wrapper>
+          <InfoNavigation>
+            <TotalCount>{metaItems.totalItems} companies</TotalCount>
+            {metaItems.totalItems > 0 && (
+              <PageNavigation>
+                {Number(metaItems.currentPage) !== 1 ? (
+                  <PageNavigationBtn onClick={() => fetchNavigate('prev')} />
+                ) : null}
+                <PageNavigationCounter>
+                  {navigationBorders}
+                </PageNavigationCounter>
+                {Number(metaItems.currentPage) !== metaItems.totalPages ? (
+                  <PageNavigationBtn
+                    $rotate={true}
+                    onClick={() => fetchNavigate('next')}
+                  />
+                ) : null}
+              </PageNavigation>
+            )}
+          </InfoNavigation>
+          {favoriteListItems.length > 0 ? (
+            <FavoritesList data={favoriteListItems} />
+          ) : (
+            <StyledEmptyFavoritesList />
           )}
-        </InfoNavigation>
-        {favoriteListItems.length > 0 ? (
-          <FavoritesList data={favoriteListItems} miniCards />
-        ) : (
-          <StyledEmptyFavoritesList />
-        )}
-      </Container>
+        </Wrapper>
+      </StyledContainer>
     </MainLayout>
   );
 }
@@ -81,6 +85,13 @@ export default function CompanyFavorites() {
 const StyledSubHeader = styled(SubHeader)`
   margin-bottom: 32px;
 `;
+const StyledContainer = styled(Container)`
+  padding-bottom: 32px;
+`;
+const Wrapper = styled.div`
+  max-width: 1096px;
+`;
+
 const InfoNavigation = styled.div`
   display: flex;
   align-items: center;
