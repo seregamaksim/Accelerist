@@ -5,7 +5,7 @@ import { useAppSelector } from '../store/hooks';
 
 interface IPrivateRouteProps {
   path: string;
-  children: JSX.Element;
+  children: React.ReactNode;
   exact?: boolean;
 }
 

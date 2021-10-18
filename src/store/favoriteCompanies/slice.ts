@@ -19,8 +19,13 @@ const favoriteCompanies = createSlice({
   reducers: {
     removeItem: (state, { payload }: PayloadAction<string>) => {
       const index = state.items.findIndex((item) => item.id === payload);
-      if (index !== -1) state.items.splice(index, 1);
+      if (index !== -1) {
+        state.items.splice(index, 1);
+      }
     },
+    // addItem : (state, {payload}: PayloadAction) => {
+
+    // }
   },
   extraReducers: (builder) => {
     builder

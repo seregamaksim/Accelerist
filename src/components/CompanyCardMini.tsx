@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import companyIcon from '../static/images/company.svg';
 import { Company } from '../store/companies/types';
@@ -19,7 +20,7 @@ export default function CompanyCardMini({
             <Logo />
           </LogoWrap>
           <CompanyInfoWrap>
-            <NameCompany>{data.name}</NameCompany>
+            <NameCompany to={`/company/${data.id}`}>{data.name}</NameCompany>
             <CompanyPriority>Priority Ranking 12</CompanyPriority>
           </CompanyInfoWrap>
         </Head>
@@ -73,7 +74,7 @@ const Logo = styled.img.attrs(() => ({
   transform: translate(-50%, -50%);
 `;
 const CompanyInfoWrap = styled.div``;
-const NameCompany = styled.p`
+const NameCompany = styled(Link)`
   font-weight: 500;
   font-size: 12px;
   line-height: 18px;
@@ -83,6 +84,9 @@ const NameCompany = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 const CompanyPriority = styled.p`
   font-size: 12px;

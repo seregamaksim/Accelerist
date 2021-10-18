@@ -6,6 +6,7 @@ import * as companies from './companies';
 import * as favoriteCompanies from './favoriteCompanies';
 import * as team from './team';
 import * as lastLogins from './lastLogins';
+import * as companyProfile from './companyProfile';
 
 export const reducer = combineReducers({
   auth: auth.reducer,
@@ -14,6 +15,7 @@ export const reducer = combineReducers({
   favoriteCompanies: favoriteCompanies.reducer,
   team: team.reducer,
   lastLogins: lastLogins.reducer,
+  companyProfile: companyProfile.reducer,
 });
 
 export const actions = {
@@ -23,6 +25,7 @@ export const actions = {
   favoriteCompanies: favoriteCompanies.actions,
   team: team.actions,
   lastLogins: lastLogins.actions,
+  companyProfile: companyProfile.actions,
 };
 
 export const selectors = {
@@ -32,4 +35,5 @@ export const selectors = {
   favoriteCompanies: favoriteCompanies.selectors,
   team: team.selectors,
   lastLogins: lastLogins.selectors,
+  companyProfile: companyProfile.selectors,
 };

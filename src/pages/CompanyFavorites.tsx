@@ -46,7 +46,8 @@ export default function CompanyFavorites() {
         limit: 12,
       })
     );
-  }, [dispatch]);
+    return () => {};
+  }, [favoriteListItems.length]);
   return (
     <MainLayout>
       <StyledSubHeader title="Favorites" />

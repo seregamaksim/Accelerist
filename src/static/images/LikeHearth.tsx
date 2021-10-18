@@ -9,7 +9,7 @@ function LikeHearth(props: Props) {
     <svg
       width={20}
       height={18}
-      fill={props.liked ? '#F05658' : 'none'}
+      fill={props.liked === 1 ? '#F05658' : 'none'}
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >

@@ -31,7 +31,7 @@ export default function CompanyCard({ className, data }: ICompanyCardProps) {
           </RankingWrap>
         </LogoBlock>
         <NameAddressBlock>
-          <NameCompany to={`/profile/${data.id}`}>{data.name}</NameCompany>
+          <NameCompany to={`/company/${data.id}`}>{data.name}</NameCompany>
           <AddressCompany>{data.street}</AddressCompany>
           <AddressCompany>{data.phone}</AddressCompany>
         </NameAddressBlock>

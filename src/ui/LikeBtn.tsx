@@ -13,26 +13,30 @@ interface ILikeBtnProps {
 
 export default function LikeBtn({ className, liked, id }: ILikeBtnProps) {
   const dispatch = useAppDispatch();
-  const [likeHearth, setLikeHearth] = useState<boolean>(liked);
+  const [likeHearth, setLikeHearth] = useState(liked ? 1 : 0);
+  const [disabled, setDisabled] = useState(false);
   useEffect(() => {
     return () => {};
-  }, []);
+  }, [likeHearth]);
   function onSubmit() {
-    if (liked) {
+    setDisabled(true);
+    if (likeHearth) {
       dispatch(dislikeCompany(id)).then(() => {
         dispatch(actions.favoriteCompanies.removeItem(id));
-        setLikeHearth(false);
+        setLikeHearth(0);
+        setDisabled(false);
       });
     } else {
       dispatch(likeCompany(id)).then(() => {
-        setLikeHearth(true);
+        setLikeHearth(1);
+        setDisabled(false);
       });
     }
   }
 
   return (
-    <Root className={className} onClick={onSubmit}>
-      <LikeHearth liked={likeHearth ? 1 : 0} />
+    <Root className={className} onClick={onSubmit} disabled={disabled}>
+      <LikeHearth liked={likeHearth} />
     </Root>
   );
 }
