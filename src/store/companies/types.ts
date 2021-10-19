@@ -1,5 +1,3 @@
-import { IUser } from '../auth/types';
-
 export interface InitialState {
   items: Company[];
   meta: {
@@ -56,7 +54,7 @@ export interface Company {
   affiliation: string | null;
   brands: string | null;
   interests: string | null;
-  typesOfInvestment: string | null;
+  typesOfInvestment: string[] | null;
   errorLoadZoomInfo: string | null;
   charitablePartners: [] | any[];
   statusZoomInfo: string;

@@ -3,14 +3,21 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Container from './Container';
 import backArrowIcon from '../static/images/back-arrow.svg';
+import SearchField from './SearchField';
 
 interface ISubHeader {
   title: string;
   backBtn?: boolean;
+  search?: boolean;
   className?: string;
 }
 
-const SubHeader: FC<ISubHeader> = ({ title, className, backBtn = false }) => {
+const SubHeader: FC<ISubHeader> = ({
+  title,
+  className,
+  backBtn = false,
+  search = false,
+}) => {
   const history = useHistory();
 
   return (
@@ -25,6 +32,7 @@ const SubHeader: FC<ISubHeader> = ({ title, className, backBtn = false }) => {
             <SubHeaderTitle>{title}</SubHeaderTitle>
           )}
         </SubHeaderTitleWrap>
+        {search && <SearchField />}
       </SubHeaderContainer>
     </SubHeaderRoot>
   );
@@ -37,6 +45,8 @@ const SubHeaderRoot = styled.section`
 const SubHeaderContainer = styled(Container)`
   padding-top: 24px;
   padding-bottom: 24px;
+  display: flex;
+  align-items: center;
 `;
 
 const SubHeaderTitleWrap = styled.div``;

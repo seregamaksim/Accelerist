@@ -7,6 +7,8 @@ import { selectors } from '../store/ducks';
 import { useAppSelector } from '../store/hooks';
 import CompanyFavorites from '../pages/CompanyFavorites';
 import CompanyProfile from '../pages/CompanyProfile';
+import Search from '../pages/Search';
+import Prospects from '../pages/Prospects';
 
 export default function Routes() {
   const isAuthohorized = useAppSelector(selectors.auth.isAuthohorized);
@@ -27,6 +29,12 @@ export default function Routes() {
       </PrivateRoute>
       <PrivateRoute path="/company/:id">
         <CompanyProfile />
+      </PrivateRoute>
+      <PrivateRoute path="/search">
+        <Search />
+      </PrivateRoute>
+      <PrivateRoute path="/prospects">
+        <Prospects />
       </PrivateRoute>
       <Route path="/signup">
         {isAuthohorized ? <Redirect to="/dashboard" /> : <SignUp />}

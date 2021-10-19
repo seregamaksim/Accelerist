@@ -24,7 +24,7 @@ export interface Item {
 export interface QueryParams {
   page: number;
   limit: number;
-  sort?: string;
+  sort: 'alphabet' | 'last-activity' | 'available' | string | null;
 }
 
 export interface SavedListResponse extends InitialState {}

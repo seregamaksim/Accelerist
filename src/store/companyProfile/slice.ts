@@ -5,6 +5,7 @@ import { InitialState } from './types';
 
 const initialState: InitialState = {
   company: {} as Company,
+  fetchStatus: 'idle',
 };
 
 const companyProfileSlice = createSlice({
@@ -12,14 +13,19 @@ const companyProfileSlice = createSlice({
   name: 'companyProfile',
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      fetchCompany.fulfilled,
-      (state, { payload }: PayloadAction<Company>) => {
-        console.log('company', payload);
-
-        state.company = payload;
-      }
-    );
+    builder
+      .addCase(fetchCompany.pending, (state, action) => {
+        console.log('pending', action);
+        state.fetchStatus = 'pending';
+      })
+      .addCase(
+        fetchCompany.fulfilled,
+        (state, { payload }: PayloadAction<Company>) => {
+          console.log('company', payload);
+          state.fetchStatus = 'fulfilled';
+          state.company = payload;
+        }
+      );
   },
 });
 

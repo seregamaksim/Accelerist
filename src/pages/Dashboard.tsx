@@ -13,6 +13,7 @@ import Reports from '../components/Reports';
 import EmptySavedList from '../components/EmptySavedList';
 import { fetchFavoritesList } from '../store/favoriteCompanies/thunks';
 import EmptyFavoritesList from '../components/EmptyFavoritesList';
+import { QueryParams } from '../store/savedList/types';
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
@@ -20,9 +21,10 @@ export default function Dashboard() {
   const favoriteListItems = useAppSelector(
     selectors.favoriteCompanies.selectFavoritesList
   );
-  const querySavedList = {
+  const querySavedList: QueryParams = {
     page: 1,
     limit: 2,
+    sort: 'alphabet',
   };
   const queryFavoritesList = {
     page: 1,

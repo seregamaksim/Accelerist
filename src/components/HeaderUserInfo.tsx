@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { actions, selectors } from '../store/ducks';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import emptyUserIcon from '../static/images/user.svg';
+
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getFullName } from '../helpers/getFullName';
@@ -112,6 +113,7 @@ const Dropdown = styled.div<{ $open: boolean }>`
   border-radius: 6px;
   padding: 24px;
   min-width: 177px;
+  z-index: 1;
   display: ${(props) => (props.$open ? 'block' : 'none')};
   @media (max-width: 1024px) {
     top: auto;

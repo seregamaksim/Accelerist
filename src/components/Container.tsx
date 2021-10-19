@@ -14,6 +14,7 @@ const Root = styled.div`
   margin: 0 auto;
   padding-left: var(--paddingL);
   padding-right: var(--paddingL);
+  position: relative;
   @media (min-width: 1440px) {
     padding-left: 60px;
     padding-right: 60px;

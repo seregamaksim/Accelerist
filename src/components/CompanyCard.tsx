@@ -1,11 +1,11 @@
 import styled, { ThemeProvider } from 'styled-components';
 import { Company } from '../store/companies/types';
 import companyIcon from '../static/images/company.svg';
-import currency from 'currency.js';
 import { theme } from '../theme';
 import UiLink from '../ui/UiLink';
 import LikeBtn from '../ui/LikeBtn';
 import { Link } from 'react-router-dom';
+import { formatedNumbers } from '../helpers/formatedNumbers';
 
 interface ICompanyCardProps {
   data: Company;
@@ -13,10 +13,7 @@ interface ICompanyCardProps {
 }
 
 export default function CompanyCard({ className, data }: ICompanyCardProps) {
-  const revenue = currency(data.revenue, {
-    pattern: `! #`,
-    precision: 0,
-  }).format();
+  const revenue = formatedNumbers(data.revenue);
 
   return (
     <Root className={className}>
