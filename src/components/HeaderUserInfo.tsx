@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { actions, selectors } from '../store/ducks';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import emptyUserIcon from '../static/images/user.svg';
-
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getFullName } from '../helpers/getFullName';

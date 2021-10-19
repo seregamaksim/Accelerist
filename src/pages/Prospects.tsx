@@ -12,6 +12,7 @@ import { fetchSavedList } from '../store/savedList/thunks';
 import { useQuery } from '../hooks/useQuery';
 import { QueryParams } from '../store/savedList/types';
 import SavedList from '../components/SavedList';
+import { Link, NavLink } from 'react-router-dom';
 
 export default function Prospects() {
   const dispatch = useAppDispatch();
@@ -41,13 +42,15 @@ export default function Prospects() {
   }
 
   useEffect(() => {
+    console.log('aw');
+
     const queryParams: QueryParams = {
       page: queryPage.get('page') ? Number(queryPage.get('page')) : 1,
       limit: 12,
       sort: queryPage.get('sort') ? queryPage.get('sort') : 'alphabet',
     };
     dispatch(fetchSavedList(queryParams));
-  }, [items.length]);
+  }, [items.length, queryPage.get('sort')]);
   return (
     <MainLayout>
       <StyledSubHeader title="Prospects" />
@@ -57,7 +60,66 @@ export default function Prospects() {
             <SortingBlock>
               <SortingBlockTitle>Sort by</SortingBlockTitle>
               <SortingBlockList>
-                <SortingBlockItem></SortingBlockItem>
+                <SortingBlockItem>
+                  <SortingBlockItemBtn
+                    to={{
+                      pathname: '/prospects',
+                      search: '?sort=alphabet',
+                    }}
+                    isActive={(match, location) => {
+                      if (!location) {
+                        return false;
+                      }
+
+                      // only consider an event active if its event id is an odd number
+                      console.log('location', location);
+                      return location.search.includes('alphabet')
+                        ? true
+                        : false;
+                    }}
+                  >
+                    Alphabet
+                  </SortingBlockItemBtn>
+                </SortingBlockItem>
+                <SortingBlockItem>
+                  <SortingBlockItemBtn
+                    to={{
+                      pathname: '/prospects',
+                      search: '?sort=available',
+                    }}
+                    isActive={(match, location) => {
+                      if (!location) {
+                        return false;
+                      }
+
+                      // only consider an event active if its event id is an odd number
+                      console.log('location', location);
+                      return location.search.includes('available')
+                        ? true
+                        : false;
+                    }}
+                  >
+                    Prospects Available
+                  </SortingBlockItemBtn>
+                </SortingBlockItem>
+                <SortingBlockItem>
+                  <SortingBlockItemBtn
+                    to={{
+                      pathname: '/prospects',
+                      search: '?sort=last-activity',
+                    }}
+                    isActive={(match, location) => {
+                      if (!location && !queryPage.get('sort')) {
+                        return false;
+                      }
+                      return location.search.includes('last-activity')
+                        ? true
+                        : false;
+                    }}
+                  >
+                    Last Activity
+                  </SortingBlockItemBtn>
+                </SortingBlockItem>
               </SortingBlockList>
             </SortingBlock>
             {metaData.totalItems > 0 && (
@@ -107,13 +169,43 @@ const SortingBlockTitle = styled.p`
   font-size: 12px;
   line-height: 18px;
   color: var(--darkGray);
+  margin-right: 26px;
 `;
 const SortingBlockList = styled.ul`
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
-const SortingBlockItem = styled.li``;
+const SortingBlockItem = styled.li`
+  margin-right: 22px;
+  &:last-child {
+    margin-right: 0;
+  }
+`;
+const SortingBlockItemBtn = styled(NavLink)`
+  display: inline-block;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--black);
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--blue);
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+  }
+  &:hover::before {
+    opacity: 1;
+  }
+  &.active::before {
+    opacity: 1;
+  }
+`;
 
 const PageNavigation = styled.div`
   display: flex;
