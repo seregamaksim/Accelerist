@@ -68,7 +68,7 @@ export const theme = {
       color: 'var(--black)',
     },
     background: 'var(--white)',
-    borderColor: '#E8E8E8',
+    borderColor: 'var(--lightGray)',
     padding: '12px 15px',
     hover: {
       fonts: {
@@ -87,6 +87,37 @@ export const theme = {
     disabled: {
       fonts: {
         color: '#BDBDBD',
+      },
+      background: '#fff',
+      borderColor: 'var(--lightGray)',
+    },
+  },
+  deleteTheme: {
+    fonts: {
+      size: '12px',
+      lineHeight: '18px',
+      color: 'var(--red)',
+    },
+    background: 'var(--white)',
+    borderColor: 'var(--lightGray)',
+    padding: '12px 15px',
+    hover: {
+      fonts: {
+        color: 'var(--red)',
+      },
+      background: '#fff',
+      borderColor: 'var(--gray)',
+    },
+    focus: {
+      fonts: {
+        color: 'var(--red)',
+      },
+      background: '#fff',
+      borderColor: 'var(--red)',
+    },
+    disabled: {
+      fonts: {
+        color: '#EEBCBD',
       },
       background: '#fff',
       borderColor: 'var(--lightGray)',

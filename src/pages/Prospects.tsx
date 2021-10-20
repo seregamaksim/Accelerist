@@ -6,14 +6,14 @@ import MainLayout from '../layouts/MainLayout';
 import { selectors } from '../store/ducks';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import backArrow from '../static/images/back-arrow.svg';
-import { useHistory } from 'react-router';
+import { match, useHistory } from 'react-router';
 import { useEffect } from 'react';
 import { fetchSavedList } from '../store/savedList/thunks';
 import { useQuery } from '../hooks/useQuery';
 import { QueryParams } from '../store/savedList/types';
 import SavedList from '../components/SavedList';
 import { Link, NavLink } from 'react-router-dom';
-
+import * as H from 'history';
 export default function Prospects() {
   const dispatch = useAppDispatch();
   const history = useHistory();
@@ -41,16 +41,28 @@ export default function Prospects() {
     });
   }
 
-  useEffect(() => {
-    console.log('aw');
+  function changeLocationBySort<Params>(
+    match: match<Params>,
+    location: H.Location<unknown>
+  ): boolean {
+    if (!location) {
+      return false;
+    }
+    const querySort = queryPage.get('sort')
+      ? queryPage.get('sort')!
+      : 'alphabet';
 
+    return location.search.includes(querySort) ? true : false;
+  }
+
+  useEffect(() => {
     const queryParams: QueryParams = {
       page: queryPage.get('page') ? Number(queryPage.get('page')) : 1,
       limit: 12,
       sort: queryPage.get('sort') ? queryPage.get('sort') : 'alphabet',
     };
     dispatch(fetchSavedList(queryParams));
-  }, [items.length, queryPage.get('sort')]);
+  }, [dispatch, queryPage.get('sort')]);
   return (
     <MainLayout>
       <StyledSubHeader title="Prospects" />
@@ -66,17 +78,13 @@ export default function Prospects() {
                       pathname: '/prospects',
                       search: '?sort=alphabet',
                     }}
-                    isActive={(match, location) => {
-                      if (!location) {
-                        return false;
-                      }
-
-                      // only consider an event active if its event id is an odd number
-                      console.log('location', location);
-                      return location.search.includes('alphabet')
-                        ? true
-                        : false;
+                    location={{
+                      pathname: '/prospects',
+                      search: '?sort=alphabet',
+                      state: '',
+                      hash: '',
                     }}
+                    isActive={changeLocationBySort}
                   >
                     Alphabet
                   </SortingBlockItemBtn>
@@ -87,17 +95,13 @@ export default function Prospects() {
                       pathname: '/prospects',
                       search: '?sort=available',
                     }}
-                    isActive={(match, location) => {
-                      if (!location) {
-                        return false;
-                      }
-
-                      // only consider an event active if its event id is an odd number
-                      console.log('location', location);
-                      return location.search.includes('available')
-                        ? true
-                        : false;
+                    location={{
+                      pathname: '/prospects',
+                      search: '?sort=available',
+                      state: '',
+                      hash: '',
                     }}
+                    isActive={changeLocationBySort}
                   >
                     Prospects Available
                   </SortingBlockItemBtn>
@@ -108,14 +112,13 @@ export default function Prospects() {
                       pathname: '/prospects',
                       search: '?sort=last-activity',
                     }}
-                    isActive={(match, location) => {
-                      if (!location && !queryPage.get('sort')) {
-                        return false;
-                      }
-                      return location.search.includes('last-activity')
-                        ? true
-                        : false;
+                    location={{
+                      pathname: '/prospects',
+                      search: '?sort=last-activity',
+                      state: '',
+                      hash: '',
                     }}
+                    isActive={changeLocationBySort}
                   >
                     Last Activity
                   </SortingBlockItemBtn>

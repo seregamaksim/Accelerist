@@ -7,10 +7,12 @@ import * as favoriteCompanies from './favoriteCompanies';
 import * as team from './team';
 import * as lastLogins from './lastLogins';
 import * as companyProfile from './companyProfile';
+import * as savedItem from './savedItem';
 
 export const reducer = combineReducers({
   auth: auth.reducer,
   savedList: savedList.reducer,
+  savedItem: savedItem.reducer,
   companies: companies.reducer,
   favoriteCompanies: favoriteCompanies.reducer,
   team: team.reducer,
@@ -21,6 +23,7 @@ export const reducer = combineReducers({
 export const actions = {
   auth: auth.actions,
   savedList: savedList.actions,
+  savedItem: savedItem.actions,
   companies: companies.actions,
   favoriteCompanies: favoriteCompanies.actions,
   team: team.actions,
@@ -31,6 +34,7 @@ export const actions = {
 export const selectors = {
   auth: auth.selectors,
   savedList: savedList.selectors,
+  savedItem: savedItem.selectors,
   companies: companies.selectors,
   favoriteCompanies: favoriteCompanies.selectors,
   team: team.selectors,

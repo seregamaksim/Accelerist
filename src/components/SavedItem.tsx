@@ -20,7 +20,7 @@ export default function SavedItem({ data, className }: ISavedItemProps) {
     <Root className={className}>
       <ItemWrapper>
         <ItemHead>
-          <ItemHeadLink to={`/prospects/${data.id}/`}>{data.name}</ItemHeadLink>
+          <ItemHeadLink to={`/prospects/${data.id}`}>{data.name}</ItemHeadLink>
         </ItemHead>
         <ItemContent>
           <ItemFiltersWrap>

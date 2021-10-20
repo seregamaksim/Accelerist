@@ -9,6 +9,7 @@ import CompanyFavorites from '../pages/CompanyFavorites';
 import CompanyProfile from '../pages/CompanyProfile';
 import Search from '../pages/Search';
 import Prospects from '../pages/Prospects';
+import ProspectsDetail from '../pages/ProspectsDetail';
 
 export default function Routes() {
   const isAuthohorized = useAppSelector(selectors.auth.isAuthohorized);
@@ -21,17 +22,22 @@ export default function Routes() {
           <Redirect to="/login" />
         )}
       </Route>
+      <PrivateRoute path="/company/:id">
+        <CompanyProfile />
+      </PrivateRoute>
+
       <PrivateRoute path="/dashboard">
         <Dashboard />
       </PrivateRoute>
       <PrivateRoute path="/favorites">
         <CompanyFavorites />
       </PrivateRoute>
-      <PrivateRoute path="/company/:id">
-        <CompanyProfile />
-      </PrivateRoute>
       <PrivateRoute path="/search">
         <Search />
+      </PrivateRoute>
+
+      <PrivateRoute path="/prospects/:id">
+        <ProspectsDetail />
       </PrivateRoute>
       <PrivateRoute path="/prospects">
         <Prospects />

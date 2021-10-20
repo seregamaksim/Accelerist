@@ -78,4 +78,4 @@ export interface QueryParams {
   limit: number;
 }
 
-export interface SavedListResponse extends InitialState {}
+export interface CompaniesResponse extends InitialState {}

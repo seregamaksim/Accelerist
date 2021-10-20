@@ -2,11 +2,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 import { http } from '../../services/http';
 import { QueryParams, FavoriteCompaniesResponse } from './types';
+import qs from 'qs';
 
 export const fetchFavoritesList = createAsyncThunk(
   'favoriteCompanies/favoritesList',
   async (query: QueryParams) => {
-    const url = `/companies/favorites?page=${query.page}&limit=${query.limit}`;
+    const params = qs.stringify(query);
+    const url = `/companies/favorites?${params}`;
     const { data }: AxiosResponse<FavoriteCompaniesResponse> = await http.get(
       url
     );

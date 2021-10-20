@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -6,6 +7,8 @@ interface Props {
   type: 'button' | 'submit' | 'reset' | undefined;
   className?: string;
   disabled?: boolean;
+  icon?: React.ReactNode;
+  rightIcon?: boolean;
   onClick?: () => void;
 }
 
@@ -15,6 +18,8 @@ export default function Button({
   type = 'button',
   disabled = false,
   onClick,
+  icon,
+  rightIcon = false,
 }: Props) {
   return (
     <StyledButton
@@ -22,13 +27,19 @@ export default function Button({
       type={type}
       disabled={disabled}
       onClick={onClick}
+      $rightIcon={rightIcon}
     >
+      {icon && icon}
       {text}
     </StyledButton>
   );
 }
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ $rightIcon: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  flex-direction: ${(props) => (props.$rightIcon ? 'row-reverse' : 'row')};
+  justify-content: center;
   font-family: inherit;
   font-size: ${(props) => props.theme.fonts.size};
   line-height: ${(props) => props.theme.fonts.lineHeight};
@@ -57,5 +68,8 @@ const StyledButton = styled.button`
     background-color: ${(props) => props.theme.disabled.background};
     border-color: ${(props) => props.theme.disabled.borderColor};
     cursor: not-allowed;
+  }
+  svg {
+    margin: ${(props) => (props.$rightIcon ? '0 0 0 8px' : '0 8px 0 0')};
   }
 `;
