@@ -40,7 +40,7 @@ export default function Dashboard() {
       <StyledSubHeader title="Dashboard" />
       <Container>
         <Wrapper>
-          <DashboardBlock twoColumns={true}>
+          <DashboardBlock $twoColumns={true}>
             <DashboardBlockHead>
               <DashboardBlockHeadTitle>
                 Prospecting Sessions
@@ -89,10 +89,10 @@ const Wrapper = styled.div`
 const StyledSubHeader = styled(SubHeader)`
   margin-bottom: 32px;
 `;
-const DashboardBlock = styled.div<{ twoColumns?: boolean }>`
+const DashboardBlock = styled.div<{ $twoColumns?: boolean }>`
   display: flex;
   flex-direction: column;
-  grid-column: ${(props) => (props.twoColumns ? 'span 2' : '')};
+  grid-column: ${(props) => (props.$twoColumns ? 'span 2' : '')};
 `;
 const DashboardBlockHead = styled.div`
   display: flex;

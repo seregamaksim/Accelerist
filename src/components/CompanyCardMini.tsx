@@ -81,7 +81,7 @@ const NameCompany = styled(Link)`
   line-height: 18px;
   color: var(--black);
   margin-bottom: 4px;
-  max-width: 150px;
+  max-width: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
