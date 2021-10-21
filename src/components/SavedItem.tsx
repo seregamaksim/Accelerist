@@ -11,7 +11,7 @@ interface ISavedItemProps {
 }
 
 export default function SavedItem({ data, className }: ISavedItemProps) {
-  const [filters, setFilters] = useState<string[]>(
+  const [filters, setFilters] = useState<any>(
     data.filters ? Object.values(data.filters) : ['']
   );
   const dateUpdate = moment(data.updatedAt).format('D MMM YYYY');
@@ -26,7 +26,7 @@ export default function SavedItem({ data, className }: ISavedItemProps) {
           <ItemFiltersWrap>
             <ItemFiltersTitle>Filters</ItemFiltersTitle>
             <ItemFiltersList>
-              {filters.map((item, index) =>
+              {filters.map((item: string, index: number) =>
                 item.length > 0 ? (
                   <ItemFiltersItem key={index}>{item}</ItemFiltersItem>
                 ) : null

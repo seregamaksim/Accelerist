@@ -18,6 +18,7 @@ interface ISubHeaderEditableProps {
   data: Item;
   className?: string;
   isInput: boolean;
+  saveFunc: () => void;
   // setIsInput: (val: boolean) => void;
   setIsInput: Dispatch<SetStateAction<boolean>>;
 }
@@ -28,6 +29,7 @@ export default function SubHeaderEditable({
   data,
   isInput,
   setIsInput,
+  saveFunc,
 }: ISubHeaderEditableProps) {
   const [inputVal, setInputVal] = useState('');
 
@@ -56,7 +58,10 @@ export default function SubHeaderEditable({
               <ThemeProvider theme={theme.secondary}>
                 <StyledButton
                   text="Save"
-                  onClick={() => setIsInput(false)}
+                  onClick={() => {
+                    saveFunc();
+                    setIsInput(false);
+                  }}
                   type="button"
                 />
               </ThemeProvider>

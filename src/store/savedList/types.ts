@@ -14,7 +14,7 @@ export interface InitialState {
 export interface Item {
   id: string;
   name: string;
-  filters: { [key: string]: string };
+  filters: Filters;
   prospectsAvailable: number;
   lastAuthor: IUser;
   createdAt: string;
@@ -27,4 +27,12 @@ export interface QueryParams {
   sort: 'alphabet' | 'last-activity' | 'available' | string | null;
 }
 
+export interface Filters {
+  [key: string]: string | string[];
+}
 export interface SavedListResponse extends InitialState {}
+
+export interface ExcelResponse {
+  name: string;
+  file: string;
+}

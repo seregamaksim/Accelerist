@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchSavedList } from './thunks';
-import { InitialState, SavedListResponse } from './types';
+import { downloadExcel, fetchSavedList, updateSavedList } from './thunks';
+import { ExcelResponse, InitialState, SavedListResponse } from './types';
 
 const initialState: InitialState = {
   items: [],
@@ -18,13 +18,21 @@ const savedListSlice = createSlice({
   name: 'savedList',
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      fetchSavedList.fulfilled,
-      (state, { payload }: PayloadAction<SavedListResponse>) => {
-        state.items = payload.items;
-        state.meta = payload.meta;
-      }
-    );
+    builder
+      .addCase(
+        fetchSavedList.fulfilled,
+        (state, { payload }: PayloadAction<SavedListResponse>) => {
+          state.items = payload.items;
+          state.meta = payload.meta;
+        }
+      )
+      .addCase(
+        updateSavedList.fulfilled,
+        (state, { payload }: PayloadAction<any>) => {
+          state.items = payload.items;
+          state.meta = payload.meta;
+        }
+      );
   },
 });
 
