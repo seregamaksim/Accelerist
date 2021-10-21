@@ -15,13 +15,11 @@ const companyProfileSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchCompany.pending, (state, action) => {
-        console.log('pending', action);
         state.fetchStatus = 'pending';
       })
       .addCase(
         fetchCompany.fulfilled,
         (state, { payload }: PayloadAction<Company>) => {
-          console.log('company', payload);
           state.fetchStatus = 'fulfilled';
           state.company = payload;
         }

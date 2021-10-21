@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import Container from '../components/Container';
 import EmptyFavoritesList from '../components/EmptyFavoritesList';
@@ -8,10 +8,8 @@ import MainLayout from '../layouts/MainLayout';
 import { selectors } from '../store/ducks';
 import { fetchFavoritesList } from '../store/favoriteCompanies/thunks';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import backArrow from '../static/images/back-arrow.svg';
-import { useBorberNavigation } from '../hooks/useBorberNavigation';
 import { useQuery } from '../hooks/useQuery';
-import { useHistory, useLocation } from 'react-router';
+import PageNavigation from '../components/PageNavigation';
 
 export default function CompanyFavorites() {
   const dispatch = useAppDispatch();
@@ -19,25 +17,8 @@ export default function CompanyFavorites() {
     selectors.favoriteCompanies.selectFavoritesList
   );
   const metaItems = useAppSelector(selectors.favoriteCompanies.selectMeta);
-  const navigationBorders = useBorberNavigation(metaItems);
-  const queryPage = useQuery();
-  const history = useHistory();
 
-  function fetchNavigate(direction: string) {
-    const currentPage =
-      direction === 'prev'
-        ? Number(metaItems.currentPage) - 1
-        : Number(metaItems.currentPage) + 1;
-    dispatch(
-      fetchFavoritesList({
-        page: currentPage,
-        limit: 12,
-      })
-    );
-    history.push({
-      search: `?page=${currentPage}`,
-    });
-  }
+  const queryPage = useQuery();
 
   useEffect(() => {
     dispatch(
@@ -46,7 +27,6 @@ export default function CompanyFavorites() {
         limit: 12,
       })
     );
-    return () => {};
   }, [favoriteListItems.length]);
   return (
     <MainLayout>
@@ -55,22 +35,11 @@ export default function CompanyFavorites() {
         <Wrapper>
           <InfoNavigation>
             <TotalCount>{metaItems.totalItems} companies</TotalCount>
-            {metaItems.totalItems > 0 && (
-              <PageNavigation>
-                {Number(metaItems.currentPage) !== 1 ? (
-                  <PageNavigationBtn onClick={() => fetchNavigate('prev')} />
-                ) : null}
-                <PageNavigationCounter>
-                  {navigationBorders}
-                </PageNavigationCounter>
-                {Number(metaItems.currentPage) !== metaItems.totalPages ? (
-                  <PageNavigationBtn
-                    $rotate={true}
-                    onClick={() => fetchNavigate('next')}
-                  />
-                ) : null}
-              </PageNavigation>
-            )}
+            <PageNavigation
+              metaData={metaItems}
+              call={fetchFavoritesList}
+              showOnlyQueryPage={true}
+            />
           </InfoNavigation>
           {favoriteListItems.length > 0 ? (
             <FavoritesList data={favoriteListItems} />
@@ -92,7 +61,6 @@ const StyledContainer = styled(Container)`
 const Wrapper = styled.div`
   max-width: 1096px;
 `;
-
 const InfoNavigation = styled.div`
   display: flex;
   align-items: center;
@@ -107,22 +75,4 @@ const TotalCount = styled.p`
 `;
 const StyledEmptyFavoritesList = styled(EmptyFavoritesList)`
   flex: 1;
-`;
-const PageNavigation = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const PageNavigationBtn = styled.button<{ $rotate?: boolean }>`
-  width: 24px;
-  height: 24px;
-  background: url(${backArrow}) no-repeat center;
-  background-size: 12px 20px;
-  ${(props) => (props.$rotate ? 'transform: rotate(180deg)' : '')};
-  cursor: pointer;
-`;
-
-const PageNavigationCounter = styled.p`
-  font-size: 12px;
-  line-height: 18px;
-  color: var(--black);
 `;

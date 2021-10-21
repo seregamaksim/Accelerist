@@ -15,44 +15,23 @@ import { fetchSavedItem } from '../store/savedItem/thunks';
 import backArrow from '../static/images/back-arrow.svg';
 import SavedList from '../components/SavedList';
 import CompanyCard from '../components/CompanyCard';
+import PageNavigation from '../components/PageNavigation';
+import { useQuery } from '../hooks/useQuery';
 
 export default function ProspectsDetail() {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
-  const history = useHistory();
-  const location = useLocation();
+  const queryPage = useQuery();
   const [isInput, setIsInput] = useState(false);
   const item = useAppSelector(selectors.savedItem.selectSavedItem);
   const companies = useAppSelector(selectors.companies.selectCompanies);
   const companiesMeta = useAppSelector(selectors.companies.selectCompaniesMeta);
 
-  const navigationBorders = useBorberNavigation(companiesMeta);
-
-  function fetchNavigate(direction: string) {
-    const currentPage =
-      direction === 'prev'
-        ? Number(companiesMeta.currentPage) - 1
-        : Number(companiesMeta.currentPage) + 1;
-    // dispatch(
-    //   fetchFavoritesList({
-    //     page: currentPage,
-    //     limit: 12,
-    //   })
-    // );
-    history.push({
-      search: `?page=${currentPage}`,
-    });
-  }
-
   useEffect(() => {
-    // console.log('id', id);
-
-    // console.log('companiesMeta', companiesMeta);
-
     dispatch(fetchSavedItem(id)).then((res) => {
       const payload: any = res.payload;
       const queryParamsForCompanies = {
-        page: 1,
+        page: queryPage.get('page') ? Number(queryPage.get('page')) : 1,
         limit: 12,
         ...payload.filters,
       };
@@ -67,7 +46,7 @@ export default function ProspectsDetail() {
         data={item}
         title={item.name}
       />
-      <Container>
+      <StyledContainer>
         {isEmpty(item) && fetchSavedItem.pending ? (
           <LoadingIcon />
         ) : (
@@ -86,25 +65,12 @@ export default function ProspectsDetail() {
               </ListFiltersWrap>
               <PaginationControls>
                 <ControlsList></ControlsList>
-                {companiesMeta.totalItems > 0 && (
-                  <PageNavigation>
-                    {Number(companiesMeta.currentPage) !== 1 ? (
-                      <PageNavigationBtn
-                        onClick={() => fetchNavigate('prev')}
-                      />
-                    ) : null}
-                    <PageNavigationCounter>
-                      {navigationBorders}
-                    </PageNavigationCounter>
-                    {Number(companiesMeta.currentPage) !==
-                    companiesMeta.totalPages ? (
-                      <PageNavigationBtn
-                        $rotate={true}
-                        onClick={() => fetchNavigate('next')}
-                      />
-                    ) : null}
-                  </PageNavigation>
-                )}
+                <PageNavigation
+                  metaData={companiesMeta}
+                  call={fetchCompanies}
+                  queryParams={item.filters}
+                  showOnlyQueryPage={true}
+                />
               </PaginationControls>
             </HeadInfo>
             <CompaniesList>
@@ -114,14 +80,16 @@ export default function ProspectsDetail() {
             </CompaniesList>
           </Wrapper>
         )}
-      </Container>
+      </StyledContainer>
     </MainLayout>
   );
 }
 const StyledSubHeader = styled(SubHeaderEditable)`
   margin-bottom: 32px;
 `;
-
+const StyledContainer = styled(Container)`
+  padding-bottom: 32px;
+`;
 const Wrapper = styled.div`
   max-width: 1096px;
 `;
@@ -170,24 +138,6 @@ const PaginationControls = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-const PageNavigation = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const PageNavigationBtn = styled.button<{ $rotate?: boolean }>`
-  width: 24px;
-  height: 24px;
-  background: url(${backArrow}) no-repeat center;
-  background-size: 12px 20px;
-  ${(props) => (props.$rotate ? 'transform: rotate(180deg)' : '')};
-  cursor: pointer;
-`;
-
-const PageNavigationCounter = styled.p`
-  font-size: 12px;
-  line-height: 18px;
-  color: var(--black);
 `;
 
 const CompaniesList = styled.div`
