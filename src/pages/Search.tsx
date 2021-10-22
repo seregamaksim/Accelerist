@@ -7,6 +7,7 @@ import Container from '../components/Container';
 import ExportBtn from '../components/ExportBtn';
 import PageNavigation from '../components/PageNavigation';
 import SavedItem from '../components/SavedItem';
+import SearchForm from '../components/SearchForm';
 import SubHeader from '../components/SubHeader';
 import { useQuery } from '../hooks/useQuery';
 import MainLayout from '../layouts/MainLayout';
@@ -25,16 +26,16 @@ export default function Search() {
   const companiesMeta = useAppSelector(selectors.companies.selectCompaniesMeta);
 
   useEffect(() => {
-    var prefixed = qs.parse(location.search, { ignoreQueryPrefix: true });
-    console.log('location', prefixed);
-
+    // var prefixed = qs.parse(location.search, { ignoreQueryPrefix: true });
+    // console.log('location', prefixed);
     // const params = qs.stringify()
-    dispatch(fetchCompanies(prefixed));
+    // dispatch(fetchCompanies(prefixed));
   }, []);
   return (
     <MainLayout>
       <StyledSubHeader title="Search" search={true} />
       <StyledContainer>
+        <SearchForm />
         <Wrapper>
           <Info>
             <InfoCountCompanies>
